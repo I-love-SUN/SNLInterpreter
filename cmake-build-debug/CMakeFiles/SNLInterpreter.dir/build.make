@@ -33,19 +33,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = D:\Clion2020\CLion-2020.1.1\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = D:\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = D:\Clion2020\CLion-2020.1.1\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe -E remove -f
+RM = D:\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\MyCourses\SNLInterpreter
+CMAKE_SOURCE_DIR = D:\SNLInterpreter
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\MyCourses\SNLInterpreter\cmake-build-debug
+CMAKE_BINARY_DIR = D:\SNLInterpreter\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/SNLInterpreter.dir/depend.make
@@ -58,29 +58,29 @@ include CMakeFiles/SNLInterpreter.dir/flags.make
 
 CMakeFiles/SNLInterpreter.dir/main.cpp.obj: CMakeFiles/SNLInterpreter.dir/flags.make
 CMakeFiles/SNLInterpreter.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SNLInterpreter.dir/main.cpp.obj"
-	D:\mingw64\bin\c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SNLInterpreter.dir\main.cpp.obj -c D:\MyCourses\SNLInterpreter\main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SNLInterpreter.dir/main.cpp.obj"
+	D:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SNLInterpreter.dir\main.cpp.obj -c D:\SNLInterpreter\main.cpp
 
 CMakeFiles/SNLInterpreter.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SNLInterpreter.dir/main.cpp.i"
-	D:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyCourses\SNLInterpreter\main.cpp > CMakeFiles\SNLInterpreter.dir\main.cpp.i
+	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\SNLInterpreter\main.cpp > CMakeFiles\SNLInterpreter.dir\main.cpp.i
 
 CMakeFiles/SNLInterpreter.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SNLInterpreter.dir/main.cpp.s"
-	D:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyCourses\SNLInterpreter\main.cpp -o CMakeFiles\SNLInterpreter.dir\main.cpp.s
+	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\SNLInterpreter\main.cpp -o CMakeFiles\SNLInterpreter.dir\main.cpp.s
 
 CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj: CMakeFiles/SNLInterpreter.dir/flags.make
 CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj: ../scanner.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj"
-	D:\mingw64\bin\c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SNLInterpreter.dir\scanner.cpp.obj -c D:\MyCourses\SNLInterpreter\scanner.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj"
+	D:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SNLInterpreter.dir\scanner.cpp.obj -c D:\SNLInterpreter\scanner.cpp
 
 CMakeFiles/SNLInterpreter.dir/scanner.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SNLInterpreter.dir/scanner.cpp.i"
-	D:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyCourses\SNLInterpreter\scanner.cpp > CMakeFiles\SNLInterpreter.dir\scanner.cpp.i
+	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\SNLInterpreter\scanner.cpp > CMakeFiles\SNLInterpreter.dir\scanner.cpp.i
 
 CMakeFiles/SNLInterpreter.dir/scanner.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SNLInterpreter.dir/scanner.cpp.s"
-	D:\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyCourses\SNLInterpreter\scanner.cpp -o CMakeFiles\SNLInterpreter.dir\scanner.cpp.s
+	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\SNLInterpreter\scanner.cpp -o CMakeFiles\SNLInterpreter.dir\scanner.cpp.s
 
 # Object files for target SNLInterpreter
 SNLInterpreter_OBJECTS = \
@@ -96,7 +96,7 @@ SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/build.make
 SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/linklibs.rsp
 SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/objects1.rsp
 SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable SNLInterpreter.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable SNLInterpreter.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\SNLInterpreter.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -109,6 +109,6 @@ CMakeFiles/SNLInterpreter.dir/clean:
 .PHONY : CMakeFiles/SNLInterpreter.dir/clean
 
 CMakeFiles/SNLInterpreter.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\MyCourses\SNLInterpreter D:\MyCourses\SNLInterpreter D:\MyCourses\SNLInterpreter\cmake-build-debug D:\MyCourses\SNLInterpreter\cmake-build-debug D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles\SNLInterpreter.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\SNLInterpreter D:\SNLInterpreter D:\SNLInterpreter\cmake-build-debug D:\SNLInterpreter\cmake-build-debug D:\SNLInterpreter\cmake-build-debug\CMakeFiles\SNLInterpreter.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/SNLInterpreter.dir/depend
 
