@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/SNLInterpreter.dir/main.cpp.obj"
+  "CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj"
   "SNLInterpreter.exe"
   "SNLInterpreter.exe.manifest"
   "SNLInterpreter.pdb"

@@ -83,6 +83,12 @@
 		<Unit filename="D:/MyCourses/SNLInterpreter/main.cpp">
 			<Option target="SNLInterpreter"/>
 		</Unit>
+		<Unit filename="D:/MyCourses/SNLInterpreter/scanner.cpp">
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/MyCourses/SNLInterpreter/scanner.h">
+			<Option target="SNLInterpreter"/>
+		</Unit>
 		<Unit filename="D:/MyCourses/SNLInterpreter/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

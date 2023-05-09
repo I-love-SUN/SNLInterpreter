@@ -149,6 +149,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+scanner.obj: scanner.cpp.obj
+
+.PHONY : scanner.obj
+
+# target to build an object file
+scanner.cpp.obj:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj
+.PHONY : scanner.cpp.obj
+
+scanner.i: scanner.cpp.i
+
+.PHONY : scanner.i
+
+# target to preprocess a source file
+scanner.cpp.i:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/scanner.cpp.i
+.PHONY : scanner.cpp.i
+
+scanner.s: scanner.cpp.s
+
+.PHONY : scanner.s
+
+# target to generate assembly for a file
+scanner.cpp.s:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/scanner.cpp.s
+.PHONY : scanner.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -161,6 +188,9 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... scanner.obj
+	@echo ... scanner.i
+	@echo ... scanner.s
 .PHONY : help
 
 
