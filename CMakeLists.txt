@@ -3,4 +3,4 @@ project(SNLInterpreter)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(SNLInterpreter main.cpp scanner.h scanner.cpp)
+add_executable(SNLInterpreter main.cpp scanner.h scanner.cpp util.h global.h)

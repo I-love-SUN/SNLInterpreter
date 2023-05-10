@@ -80,6 +80,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/SNLInterpreter/cmake-build-debug/global.h">
+			<Option target="SNLInterpreter"/>
+		</Unit>
 		<Unit filename="D:/SNLInterpreter/main.cpp">
 			<Option target="SNLInterpreter"/>
 		</Unit>
@@ -87,6 +90,9 @@
 			<Option target="SNLInterpreter"/>
 		</Unit>
 		<Unit filename="D:/SNLInterpreter/scanner.h">
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/SNLInterpreter/util.h">
 			<Option target="SNLInterpreter"/>
 		</Unit>
 		<Unit filename="D:/SNLInterpreter/CMakeLists.txt">

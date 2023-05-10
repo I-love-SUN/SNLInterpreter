@@ -1,10 +1,11 @@
-//
-// Created by long on 2023/5/9.
-//
+/*
+ *编译器的词法扫描
+ */
 
+/* 判断联入标志，如该头文件已经联入则不再联入*/
 #ifndef SNLINTERPRETER_SCANNER_H
 #define SNLINTERPRETER_SCANNER_H
 
-#endif //SNLINTERPRETER_SCANNER_H
+void getTokenlist();
 
-///////////////////vbn
+#endif //SNLINTERPRETER_SCANNER_H
