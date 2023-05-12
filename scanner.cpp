@@ -178,7 +178,7 @@ void getTokenlist()
                     } else {
                         state = DONE;
                         switch (ch) {
-                            case EOF: {
+                            case EOF: {//文件读取结束
                                 saveFlag = FALSE;
                                 curToken.Lex = ENDFILE;
                                 break;
@@ -241,13 +241,34 @@ void getTokenlist()
                     break;
                 }
                 case INID:{
+                    if(!isalnum(ch))
+                    {
+                        ungetNextChar();
+                        saveFlag = FALSE;
+                        state = DONE;
+                        curToken.Lex = ID;
+                    }
                     break;
-
                 }
                 case INNUM:{
+                    if(!isdigit(ch))
+                    {
+                        ungetNextChar();
+                        saveFlag = FALSE;
+                        state = DONE;
+                        curToken.Lex = INTC;
+                    }
                     break;
                 }
                 case INASSIGN:{
+                    state = DONE;
+                    if(ch=='=')curToken.Lex = ASSIGN;
+                    else{
+                        ungetNextChar();
+                        saveFlag = FALSE;
+                        curToken.Lex = ERROR;
+                        Error = TRUE;
+                    }
                     break;
                 }
                 case INCOMMENT:{
@@ -260,17 +281,100 @@ void getTokenlist()
                     break;
                 }
                 case INCHAR:{
+                    if(isalnum(ch))
+                    {
+                        int ch_next = getNextChar();
+                        if(ch_next=='\'')
+                        {
+                            saveFlag = TRUE;
+                            state = DONE;
+                            curToken.Lex = CHARC;
+                        }
+                        else{
+                            ungetNextChar();
+                            ungetNextChar();
+                            state = DONE;
+                            curToken.Lex = ERROR;
+                            Error = TRUE;
+                        }
+                    }
+                    else{
+                        ungetNextChar();
+                        state = DONE;
+                        curToken.Lex = ERROR;
+                        Error = TRUE;
+                    }
                     break;
                 }
                 case INRANGE:{
+                    state = DONE;
+                    if(ch=='.')curToken.Lex = UNDERANGE;
+                    else{
+                        /*"."后面不是".",当前识别单词curToken设置为ERROR*/
+                        ungetNextChar();
+                        saveFlag = FALSE;
+                        curToken.Lex = ERROR;
+                        //curToken.Lex = DOT;
+                        Error = TRUE;
+                    }
                     break;
 
                 }
-                case DONE:break;/*确定性有限自动机处于单词结束位置*/
+                case DONE:{
+                    break;/*确定性有限自动机处于单词结束位置*/
+                }
+                default:
+                {
+                    fprintf(listing,"Scanner Bug: state= %d\n",state);
+                    Error = TRUE;
+                    state = DONE;
+                    curToken.Lex = ERROR;
+                    break;
+                }
             }
 
-
+            /*------------分类完毕-------------------------*/
+            if(saveFlag&&tokenStringIndex<MAXTOKENLEN)
+                tokenString[tokenStringIndex++] = (char)ch;
+            if(state == DONE)
+            {
+                tokenString[tokenStringIndex] = '\0';
+                if(curToken.Lex == ID)
+                {
+                    curToken.Lex = reservedLookup(tokenString);
+//                    /*如果是保留字*/
+//                    if(curToken.Lex!=ID)
+//                        strcmp(tokenString,tokenString);
+                }
+            }
         }
 
-    }while((curToken.Lex)!=ENDFILE));
+        /*-------------------记录token信息----------------*/
+        curToken.Lineshow = lineno;
+        strcpy(curToken.Sem,tokenString);
+
+        cur->Token.Lineshow = curToken.Lineshow;
+        cur->Token.Lex = curToken.Lex;
+        strcpy(cur->Token.Sem ,curToken.Sem);
+
+        Tokennum++;
+
+        if(cur_pre!=cur)
+        {
+            cur_pre->nextToken = cur;
+            cur_pre = cur;
+        }
+        cur = (ChainNodeType*)malloc(sizeof(ChainNodeType));
+        cur->nextToken = nullptr;
+    }while(curToken.Lex!=ENDFILE);
+
+    /*存入Tokenlist文件*/
+    ChainToFile(chainHead);
+    /*释放链表*/
+    while(chainHead!= nullptr)
+    {
+        temp = chainHead->nextToken;
+        free(chainHead);
+        chainHead = temp;
+    }
 }
