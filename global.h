@@ -40,6 +40,14 @@
 #define CHAINNODELEN sizeof(ChainNodeType)
 
 /*
+ * 定义token的长度
+ * */
+#define TOKENLEN sizeof (TokenType)
+
+
+
+
+/*
  * ------------------单词词法类型--------------------
  */
 typedef enum {
@@ -48,10 +56,10 @@ typedef enum {
     ENDFILE,    ERROR,
 
     /*保留字*/
-    PROGRAM,    PROCEDURE,      TYPE,   VAR,    IF,
-    THEN,       ELSE,           FI,     WHILE,  DO,
-    ENDWH,      BEGIN,          END,    WRITE,  READ,
-    ARRAY,      OF,             RECORD, RETURN,
+    PROGRAM,    PROCEDURE,      TYPE,     VAR,    IF,
+    THEN,       ELSE,           FI,       WHILE,  DO,
+    ENDWH,      BEGIN,          END,      WRITE,  READ,
+    ARRAY,      OF,             RECORD,   RETURN,
 
     /*数据基类型*/
     INTEGER,    CHAR,
@@ -83,6 +91,7 @@ typedef struct node
 {
     TokenType  Token;/*单词*/
     struct node *nextToken;
+    node():nextToken(nullptr){};
 }ChainNodeType;
 
 
@@ -96,7 +105,7 @@ extern FILE *source;
 extern FILE *listing;
 
 /*词法分析结果tokenlist存储文件指针*/
-extern FILE *Fp;
+extern FILE *fp;
 
 /*源文件的行号*/
 extern int lineno;
@@ -111,7 +120,7 @@ extern int Tokennum;
 /*
  * 追踪标志：本次指定的输出设备是文件listing
  */
-/*源代码跟踪标志判断是否要将源程序列表输出到指定设备*/
+/*源代码跟踪标志，判断是否要将源程序列表输出到指定设备*/
 extern int EchoSource;
 /*词法分析追踪标志，初始为FALSE。为TRUE,将词法分析信息输出到指定设备*/
 extern int TraceScan;

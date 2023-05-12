@@ -5,32 +5,36 @@
 /*
  * 包含头文件
  */
-#include "global.h"
+#include "../global.h"
 #include<string.h>
+#include <string>
 #include<ctype.h>
-#include "util.h"
+#include "../util.h"
+#include "scanner.h"
 #include<math.h>
+using std::string;
+
+//extern FILE *source;
+//
+//extern FILE *listing;
+//
+//extern int lineno;
+//
+//extern int Tokennum;
+//
+//extern int Error;
+//
+//extern int EchoSource;
+
 
 /*====================================================|
  * static函数只能声明后的本文中调用,static函数在内存中只有一份 |
  * static全局变量只能声明后的本文中调用                     |
  *====================================================|*/
 
-/*
- * 词法分析器确定性有限自动机DFA状态类型
- */
-typedef enum{
-    START,      //开始状态
-    INASSIGN,   //赋值装填
-    INRANGE,    //下标范围状态
-    INCOMMENT,  //注释状态
-    INNUM,      //数字状态
-    INID,       //标识符状态
-    INCHAR,     //字符状态
-    DONE        //完成状态
-}StateType;
 
-/*tokenString*同于保存标识符和保留字单词的词元*/
+
+/*tokenString*同于保存标识符和保留字单词的词元，长度41*/
 char tokenString[MAXTOKENLEN+1];
 
 /*源码行的输入缓冲区长度为256*/
@@ -56,11 +60,12 @@ static int EOF_flag = FALSE;
  *----------------------------------------------------------------------------*/
 
 static int getNextChar(){
-    if(linepos<buf_strSize){
+    if(linepos < buf_strSize){
         return lineBuf[linepos++];
     }
     else{
-
+        /* 当前代码输入行缓冲区lineBuf以用完 ，需要另起一行 ，行号lineno+1*/
+        lineno++;
         /*从源文件的source中读入BURLEN-1个字符到行缓冲区中
          * 若该行（包括最后一个换行符）的字符数超过n-1，则fgets只返回一个不完整的行，
          * 缓冲区总是以NULL字符结尾
@@ -87,7 +92,7 @@ static int getNextChar(){
 /*---------------------------------------------------
  * 函数：ungetNextChar()
  * 功能：字符回退函数
- * 说明：lineBuf中的回退一个
+ * 说明：lineBuf中的回退一个，用于超前读字符后不匹配回退
  *---------------------------------------------------*/
 static void ungetNextChar()
 {
@@ -97,7 +102,7 @@ static void ungetNextChar()
 
 /*----------------------------------保留字查找表:21个---------------------------------*/
 static struct{
-    char *str;
+    const string str;
     LexType tok;
 }reservedWords[MAXRESERVED] ={
          {"program",PROGRAM},{"type",TYPE},{"var",VAR},{"procedure",PROCEDURE}
@@ -113,10 +118,10 @@ static struct{
  * 说明：将识别出来的字符串传入，查找保留字表
  */
 
-static LexType reservedLookup(char *str){
+static LexType reservedLookup(string str){
     /*21个*/
     for(int i = 0;i<MAXRESERVED;i++){
-        if(strcmp(str,reservedWords[i].str)==0){
+        if(str==reservedWords[i].str){
             return reservedWords[i].tok;
         }
     }
@@ -142,9 +147,9 @@ void getTokenlist()
     TokenType curToken;
 
     /*第一个节点*/
-    chainHead = cur_pre = cur = (ChainNodeType *)malloc(sizeof(ChainNodeType));
+    chainHead = cur_pre = cur = new ChainNodeType();
 
-    cur->nextToken = nullptr;
+//    cur->nextToken = nullptr;
     do{
         /*tokenString中的当前正在识别字符的位置*/
         int tokenStringIndex = 0;
@@ -169,13 +174,14 @@ void getTokenlist()
                     else if (ch == '.') state = INRANGE;/*下标范围状态*/
                     else if (ch == '{') {
                         saveFlag = FALSE;
-                        state = INCOMMENT;/*注释状态*/
+                        state = INCOMMENT;              /*注释状态*/
                     } else if (ch == '\'') {
                         saveFlag = FALSE;
-                        state = INCHAR;
+                        state = INCHAR;                  /*字符标志状态*/
                     } else if (ch == ' ' || ch == '\t' || ch == '\n') {
                         saveFlag = FALSE;
                     } else {
+                        /* ch为其他字符，当前状态设置为DONE，然后进一步分类处理*/
                         state = DONE;
                         switch (ch) {
                             case EOF: {//文件读取结束
@@ -236,11 +242,12 @@ void getTokenlist()
                                 break;
                             }
                         }
-
                     }
                     break;
                 }
+                /*当前为处理标识符状态，DFA处于标识符单词位置*/
                 case INID:{
+                    /* 当前字符不是字母，在缓冲区中回退一个字符，标识符已识别完成*/
                     if(!isalnum(ch))
                     {
                         ungetNextChar();
@@ -250,7 +257,9 @@ void getTokenlist()
                     }
                     break;
                 }
+                //数字状态
                 case INNUM:{
+                    /*不是数字则数字串已经识别完毕，回退一个字符*/
                     if(!isdigit(ch))
                     {
                         ungetNextChar();
@@ -262,7 +271,9 @@ void getTokenlist()
                 }
                 case INASSIGN:{
                     state = DONE;
-                    if(ch=='=')curToken.Lex = ASSIGN;
+                    if(ch=='=')
+                        curToken.Lex = ASSIGN;
+                    /*若：后面不是=，在缓冲区中回退一个字符，报错赋值错误*/
                     else{
                         ungetNextChar();
                         saveFlag = FALSE;
@@ -271,6 +282,7 @@ void getTokenlist()
                     }
                     break;
                 }
+                //注释状态
                 case INCOMMENT:{
                     saveFlag = FALSE;
                     if(ch==EOF){
@@ -280,6 +292,7 @@ void getTokenlist()
                     else if(ch=='}') state = START;  /*注释状态结束，设置为开始状态*/
                     break;
                 }
+                //字符标志状态'c'
                 case INCHAR:{
                     if(isalnum(ch))
                     {
@@ -306,6 +319,7 @@ void getTokenlist()
                     }
                     break;
                 }
+                /*下标范围状态*/
                 case INRANGE:{
                     state = DONE;
                     if(ch=='.')curToken.Lex = UNDERANGE;
@@ -334,10 +348,13 @@ void getTokenlist()
             }
 
             /*------------分类完毕-------------------------*/
-            if(saveFlag&&tokenStringIndex<MAXTOKENLEN)
+            /*当前字符存储状态saveFlag为true，且当前识别单词未超过单词最大长度，
+             * 将当前字符写入当前正识别单词存储区tokenString            */
+            if(saveFlag && tokenStringIndex < MAXTOKENLEN)
                 tokenString[tokenStringIndex++] = (char)ch;
             if(state == DONE)
             {
+                //单词识别完毕，加上结束标志\0
                 tokenString[tokenStringIndex] = '\0';
                 if(curToken.Lex == ID)
                 {
@@ -359,22 +376,22 @@ void getTokenlist()
 
         Tokennum++;
 
-        if(cur_pre!=cur)
+        if(cur_pre != cur)
         {
             cur_pre->nextToken = cur;
             cur_pre = cur;
         }
-        cur = (ChainNodeType*)malloc(sizeof(ChainNodeType));
-        cur->nextToken = nullptr;
+        cur = new ChainNodeType();
+//        cur->nextToken = nullptr;
     }while(curToken.Lex!=ENDFILE);
 
     /*存入Tokenlist文件*/
     ChainToFile(chainHead);
     /*释放链表*/
-    while(chainHead!= nullptr)
+    while(chainHead != nullptr)
     {
         temp = chainHead->nextToken;
-        free(chainHead);
+        delete chainHead;
         chainHead = temp;
     }
 }
