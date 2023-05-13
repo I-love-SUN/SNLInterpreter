@@ -16,8 +16,9 @@ int fp_num = 0; //输出时记录token的数量
  * */
 void printTokenlist(){
     TokenType token;
-    std::string filename = "Tokenlist";
-    fp = fopen(filename.c_str(), "rb");
+    std::string path = "../outFile/";
+    std::string filename = "Tokenlist.txt";
+    fp = fopen((path+filename).c_str(), "rb");
     if(fp == NULL)
     {
         std::cout<<"Can't open the file "+filename+"!\n";
@@ -108,6 +109,7 @@ void printTokenlist(){
             case ERROR:
                 fprintf(listing,"Error: %s\n",token.Sem);
                 break;
+
             default:
                 fprintf(listing,"Unknown token: %d\n",token.Lex);
                 break;
@@ -125,23 +127,25 @@ void printTokenlist(){
 void ChainToFile(ChainNodeType *Chainhead){
     int num = 1;
     ChainNodeType  *cur = Chainhead;
-    std::string filename = "Tokenlist";
-    fp = fopen(filename.c_str(),"wb+");
+    std::string path = "../outFile/";
+    std::string filename = "Tokenlist.txt";
+    fp = fopen((path+filename).c_str(),"wb+");
     if(!fp)
     {
-        std::cout<<"Cannot create file Tokenlist!\n";
+        std::cout<<"Cannot create file "+filename+"!\n";
         Error = TRUE;
     }
-    fp = fopen(filename.c_str(),"ab");
+    fp = fopen((path+filename).c_str(),"ab");
     if(!fp)
     {
-        std::cout<<"Cannot open file Tokenlist!\n";
+        std::cout<<"Cannot open file "+filename+"!\n";
         Error = TRUE;
     }
-    do{
+    /*遍历链表，将所有的token写入文件*/
+    while (cur){
         fwrite(cur,TOKENLEN,1,fp);
         cur = cur->nextToken;
         num++;
-    }while (cur = nullptr);
+    }
     fclose(fp);
 }

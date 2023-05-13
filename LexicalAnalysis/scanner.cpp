@@ -22,7 +22,7 @@ using std::string;
 //
 //extern int Tokennum;
 //
-//extern int Error;
+int Error;
 //
 //extern int EchoSource;
 
