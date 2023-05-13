@@ -15,9 +15,9 @@ using std::string;
 /*
  * 全局变量区
  */
-FILE *fp;
-FILE *source;
-FILE *listing;
+ FILE *fp;
+ FILE *source;
+ FILE *listing;
 
 int Tokennum = 0;
 int lineno = 0;
@@ -25,11 +25,10 @@ int EchoSource = TRUE;
 int TraceScan = TRUE;
 
 
-
 int main() {
     std::cout << "Hello, SNL!" << std::endl;
 
-    string programName = "D:\\MyCourses\\SNLInterpreter\\testFiles\\test1.txt";
+    string programName = "..\\testFiles\\test1.txt";
 //    std::cout << "请输入程序的文件名：\n";
 //    std::cin>>programName;
 

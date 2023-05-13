@@ -7,6 +7,8 @@
 
 //extern FILE *fp;
 
+std::string path = "../outFile/";
+
 int fp_num = 0; //输出时记录token的数量
 
 /*
@@ -16,7 +18,6 @@ int fp_num = 0; //输出时记录token的数量
  * */
 void printTokenlist(){
     TokenType token;
-    std::string path = "../outFile/";
     std::string filename = "Tokenlist.txt";
     fp = fopen((path+filename).c_str(), "rb");
     if(fp == NULL)
@@ -127,7 +128,6 @@ void printTokenlist(){
 void ChainToFile(ChainNodeType *Chainhead){
     int num = 1;
     ChainNodeType  *cur = Chainhead;
-    std::string path = "../outFile/";
     std::string filename = "Tokenlist.txt";
     fp = fopen((path+filename).c_str(),"wb+");
     if(!fp)

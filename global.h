@@ -9,7 +9,8 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-
+#include <string>
+using std::string;
 /*
  * 定义常量FALSE为0，TRUE为1
  */
@@ -33,6 +34,12 @@
 /*
  * 初始化符号中变量的偏移
  */
+#define INITOFF 7
+
+/*
+ * scope栈的大小
+ * */
+#define SCOPESIZE 1000
 
 /*
  * 定义链表节点的长度
@@ -94,6 +101,213 @@ typedef struct node
     node():nextToken(nullptr){};
 }ChainNodeType;
 
+/*
+ * 语法分析树
+ * */
+typedef enum{
+    /*标志节点：只表示结点的类型，没有具体的内容*/
+    ProK, //语法树根标志节点
+    PheadK, //程序头标志节点
+    TypeK, //类型声明标志节点
+    VarK, //变量声明标志结点
+    ProcDecK, //过程声明标志结点
+    FunkDeck,//函数声明标志结点
+    StmLK, //语句序列标志结点
+    /*声明结点：*/
+    StmtK, //语句声明结点
+    DecK, //声明类型节点
+    ExpK //表达式结点
+}NodeKind;
+
+
+/*
+ * 声明类型的枚举
+ * */
+typedef enum {
+    ArrayK, //数组类型
+    CharK, //字符类型
+    IntegerK, //整数类型
+    RecordK, //记录类型
+    IdK //类型标识符作为类型
+}DecKind;
+
+
+/*
+ * 语句类型枚举
+ * */
+typedef enum {
+    IfK, //判断类型if
+    WhileK, //循环类型While
+    AssignK, //赋值类型=
+    ReadK, //读类型（程序输入）
+    WriteK, //写类型（程序输出）
+    CallK, //函数调用类型
+    ReturnK //函数返回类型
+} StmtKind;
+
+
+/*
+ * 表达式类型枚举
+ * */
+typedef enum {
+    OpK, //操作类型
+    ConstK, //常数类型
+    VariK //变量类型
+} ExpKind;
+
+
+/*
+ * 变量类型枚举
+ * */
+typedef enum {
+    IdV, //标识符
+    ArrayMembV, //数组成员
+    FieldMembV, //域成员
+}VarKind;
+
+
+/*
+ * 类型检查类型枚举
+ * */
+typedef enum {
+    Void,
+    Integer,
+    Boolean,
+    Char
+}ExpType;
+
+
+/*
+ * 参数类型枚举
+ * */
+typedef enum {
+    valparamType, //值参
+    varparamType //变参
+}ParamType;
+
+/*定义语法树结点的最大子节点数为3，
+ * 过程声明部分子节点child[0]指向参数部分，
+ * 子节点child[1]指向声明体部分，
+ * 子节点child[2]指向函数的语句部分
+ * */
+#define MAXCHILDREN 3
+
+//提前声明符号表
+struct symbtable;
+
+//语法树结点
+typedef struct treeNode
+{
+    struct treeNode *child[MAXCHILDREN];    //子节点指针
+    struct treeNode *sibling;               //兄弟结点指针
+    int lineno;                             //源程序代码行号
+    NodeKind nodeKind;                      //结点类型
+
+    union {                                 //声明的结点类型（具体类型）
+        DecKind dec;
+        StmtKind stmt;
+        ExpKind exp;
+    }kind;
+
+    int idnum;                      //相同类型的变量个数
+    string name[10];                //标识符的名称
+
+    struct symbtable *table[10];    //与标识符对应的符号表地址，在语义分析阶段填入
+
+    struct {
+
+        struct{
+            int low;                //数组上界
+            int up;                 //数组下界
+            DecKind childtype;      //数组的子类型
+        }ArrayAttr;                 //数组类型
+
+        struct {
+            ParamType paramt;       //过程的参数属性
+        }ProcAttr;                  //过程属性
+
+        struct {
+            LexType op;             //表达式的操作符
+            int val;                //表达式的值
+            VarKind varKind;        //变量的类别
+            ExpType type;           //表达式属性
+        };
+
+        string typeName;            //类型名是标识符
+    }attr;
+
+}TreeNode;
+
+//非终极符的个数
+#define NTMLNUM 68
+
+//终极符个数
+#define TMLNUM 42
+
+/*所有非终极符*/
+typedef enum
+{
+    Program,	      ProgramHead,	    ProgramName,	DeclarePart,
+    TypeDec,          TypeDeclaration,	TypeDecList,	TypeDecMore,
+    TypeId,	          TypeName,			BaseType,	    StructureType,
+    ArrayType,        Low,	            Top,            RecType,
+    FieldDecList,     FieldDecMore,	    IdList,	        IdMore,
+    VarDec,	          VarDeclaration,	VarDecList,		VarDecMore,
+    VarIdList,	      VarIdMore,		ProcDec,		ProcDeclaration,
+    ProcDecMore,      ProcName,		    ParamList,		ParamDecList,
+    ParamMore,        Param,		    FormList,		FidMore,
+    ProcDecPart,      ProcBody,	    	ProgramBody,	StmList,
+    StmMore,          Stm,				AssCall,		AssignmentRest,
+    ConditionalStm,   StmL,			    LoopStm,		InputStm,
+    InVar,            OutputStm,		ReturnStm,		CallStmRest,
+    ActParamList,     ActParamMore,		RelExp,			OtherRelE,
+    Exp,			  OtherTerm,		Term,           OtherFactor,
+    Factor,           Variable,			VariMore,		FieldVar,
+    FieldVarMore,     CmpOp,			AddOp,          MultOp
+}  NontmlType;
+
+/*所有的终极符都取自单词词法类型的枚举定义*/
+typedef LexType TmlType;
+
+
+/*LL1分析站栈，存放终极符和非终极符*/
+typedef struct Node
+{
+    /*flag=1位非终极符，flag=2位终极符*/
+    int flag;
+
+    union{
+        NontmlType Ntmlvar; /*非终极符部分*/
+        TmlType tmlvar; /*终极符部分 */
+    };
+
+    /*指向下一个结点的指针*/
+    struct Node *underNode;
+}StackNode;
+
+/*
+ * 创建语法树所需的类型和变量****************************
+ */
+/*
+ * 建立声明和语句部分的语法树所设的指针栈
+ * 栈中存放的是指针地址
+ * */
+typedef struct NodePA
+{
+    TreeNode **pointer;
+    struct NodePA *underNode;
+} StackNodePA;
+
+/*为生成表达式部分的语法树所设的指针栈
+ * 栈中存放的是指向树节点的指针
+ * */
+typedef struct NodeP
+{
+    TreeNode **pointer;
+    struct NodeP *underNode;
+}StackNodeP;
+
+
 
 /*
  * 全局共享
@@ -114,8 +328,31 @@ extern int lineno;
 extern int Tokennum;
 
 
+/*符号栈、操作符栈的指针及标志*/
 
+/*符号栈顶指针*/
+extern StackNode *StackTop;
 
+/*栈空标志*/
+extern int STACKEMPTY;
+
+/*语法树栈顶指针*/
+extern StackNodePA *StackTopPA;
+
+/*栈空标志*/
+extern int paSTACKEMPTY;
+
+/*操作符栈顶指针*/
+extern StackNodeP * OpStackTop;
+
+/*栈空标志*/
+extern int OpSTACKEMPTY;
+
+/*操作数栈顶标志*/
+extern StackNodeP *NumStackTop;
+
+/*操作数栈空标志*/
+extern int NumSTACKEMPTY;
 
 /*
  * 追踪标志：本次指定的输出设备是文件listing
