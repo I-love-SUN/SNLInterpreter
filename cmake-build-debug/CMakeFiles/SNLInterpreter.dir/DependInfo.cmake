@@ -4,8 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/SNLInterpreter/main.cpp" "D:/SNLInterpreter/cmake-build-debug/CMakeFiles/SNLInterpreter.dir/main.cpp.obj"
-  "D:/SNLInterpreter/scanner.cpp" "D:/SNLInterpreter/cmake-build-debug/CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj"
+  "D:/MyCourses/SNLInterpreter/LexicalAnalysis/scanner.cpp" "D:/MyCourses/SNLInterpreter/cmake-build-debug/CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj"
+  "D:/MyCourses/SNLInterpreter/SyntaxAnalysis/parse.cpp" "D:/MyCourses/SNLInterpreter/cmake-build-debug/CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.obj"
+  "D:/MyCourses/SNLInterpreter/main.cpp" "D:/MyCourses/SNLInterpreter/cmake-build-debug/CMakeFiles/SNLInterpreter.dir/main.cpp.obj"
+  "D:/MyCourses/SNLInterpreter/util.cpp" "D:/MyCourses/SNLInterpreter/cmake-build-debug/CMakeFiles/SNLInterpreter.dir/util.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

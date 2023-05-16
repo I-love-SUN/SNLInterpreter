@@ -13,3 +13,18 @@
 void printTokenlist();
 
 void ChainToFile(ChainNodeType *p);
+
+TreeNode * newRootNode();
+
+TreeNode * newPheadNode();
+
+TreeNode * newDecANode(NodeKind kind);
+
+TreeNode * newDecNode();
+
+TreeNode * newProcNode();
+
+TreeNode * newStmlNode();
+
+void ReadNextToken(TokenType *p);
+

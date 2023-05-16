@@ -38,19 +38,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = D:\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = D:\Clion2020\CLion-2020.1.1\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = D:\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe -E remove -f
+RM = D:\Clion2020\CLion-2020.1.1\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\SNLInterpreter
+CMAKE_SOURCE_DIR = D:\MyCourses\SNLInterpreter
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\SNLInterpreter\cmake-build-debug
+CMAKE_BINARY_DIR = D:\MyCourses\SNLInterpreter\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -58,7 +58,7 @@ CMAKE_BINARY_DIR = D:\SNLInterpreter\cmake-build-debug
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	D:\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
+	D:\Clion2020\CLion-2020.1.1\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe -E echo "No interactive CMake dialog available."
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -69,7 +69,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	D:\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	D:\Clion2020\CLion-2020.1.1\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -79,9 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\SNLInterpreter\cmake-build-debug\CMakeFiles D:\SNLInterpreter\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\SNLInterpreter\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -122,6 +122,60 @@ SNLInterpreter/fast:
 	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/build
 .PHONY : SNLInterpreter/fast
 
+LexicalAnalysis/scanner.obj: LexicalAnalysis/scanner.cpp.obj
+
+.PHONY : LexicalAnalysis/scanner.obj
+
+# target to build an object file
+LexicalAnalysis/scanner.cpp.obj:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj
+.PHONY : LexicalAnalysis/scanner.cpp.obj
+
+LexicalAnalysis/scanner.i: LexicalAnalysis/scanner.cpp.i
+
+.PHONY : LexicalAnalysis/scanner.i
+
+# target to preprocess a source file
+LexicalAnalysis/scanner.cpp.i:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.i
+.PHONY : LexicalAnalysis/scanner.cpp.i
+
+LexicalAnalysis/scanner.s: LexicalAnalysis/scanner.cpp.s
+
+.PHONY : LexicalAnalysis/scanner.s
+
+# target to generate assembly for a file
+LexicalAnalysis/scanner.cpp.s:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.s
+.PHONY : LexicalAnalysis/scanner.cpp.s
+
+SyntaxAnalysis/parse.obj: SyntaxAnalysis/parse.cpp.obj
+
+.PHONY : SyntaxAnalysis/parse.obj
+
+# target to build an object file
+SyntaxAnalysis/parse.cpp.obj:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.obj
+.PHONY : SyntaxAnalysis/parse.cpp.obj
+
+SyntaxAnalysis/parse.i: SyntaxAnalysis/parse.cpp.i
+
+.PHONY : SyntaxAnalysis/parse.i
+
+# target to preprocess a source file
+SyntaxAnalysis/parse.cpp.i:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.i
+.PHONY : SyntaxAnalysis/parse.cpp.i
+
+SyntaxAnalysis/parse.s: SyntaxAnalysis/parse.cpp.s
+
+.PHONY : SyntaxAnalysis/parse.s
+
+# target to generate assembly for a file
+SyntaxAnalysis/parse.cpp.s:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.s
+.PHONY : SyntaxAnalysis/parse.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -149,32 +203,32 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-scanner.obj: scanner.cpp.obj
+util.obj: util.cpp.obj
 
-.PHONY : scanner.obj
+.PHONY : util.obj
 
 # target to build an object file
-scanner.cpp.obj:
-	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj
-.PHONY : scanner.cpp.obj
+util.cpp.obj:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/util.cpp.obj
+.PHONY : util.cpp.obj
 
-scanner.i: scanner.cpp.i
+util.i: util.cpp.i
 
-.PHONY : scanner.i
+.PHONY : util.i
 
 # target to preprocess a source file
-scanner.cpp.i:
-	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/scanner.cpp.i
-.PHONY : scanner.cpp.i
+util.cpp.i:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/util.cpp.i
+.PHONY : util.cpp.i
 
-scanner.s: scanner.cpp.s
+util.s: util.cpp.s
 
-.PHONY : scanner.s
+.PHONY : util.s
 
 # target to generate assembly for a file
-scanner.cpp.s:
-	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/scanner.cpp.s
-.PHONY : scanner.cpp.s
+util.cpp.s:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/util.cpp.s
+.PHONY : util.cpp.s
 
 # Help Target
 help:
@@ -185,12 +239,18 @@ help:
 	@echo ... SNLInterpreter
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... LexicalAnalysis/scanner.obj
+	@echo ... LexicalAnalysis/scanner.i
+	@echo ... LexicalAnalysis/scanner.s
+	@echo ... SyntaxAnalysis/parse.obj
+	@echo ... SyntaxAnalysis/parse.i
+	@echo ... SyntaxAnalysis/parse.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
-	@echo ... scanner.obj
-	@echo ... scanner.i
-	@echo ... scanner.s
+	@echo ... util.obj
+	@echo ... util.i
+	@echo ... util.s
 .PHONY : help
 
 
