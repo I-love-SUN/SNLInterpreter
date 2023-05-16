@@ -8,7 +8,7 @@
 //extern FILE *fp;
 
 std::string path = "../outFile/";
-
+std::string filename = "Tokenlist.txt";
 int fp_num = 0; //输出时记录token的数量
 
 /*
@@ -18,7 +18,7 @@ int fp_num = 0; //输出时记录token的数量
  * */
 void printTokenlist(){
     TokenType token;
-    std::string filename = "Tokenlist.txt";
+
     fp = fopen((path+filename).c_str(), "rb");
     if(fp == NULL)
     {
@@ -128,7 +128,7 @@ void printTokenlist(){
 void ChainToFile(ChainNodeType *Chainhead){
     int num = 1;
     ChainNodeType  *cur = Chainhead;
-    std::string filename = "Tokenlist.txt";
+
     fp = fopen((path+filename).c_str(),"wb+");
     if(!fp)
     {
@@ -149,3 +149,254 @@ void ChainToFile(ChainNodeType *Chainhead){
     }
     fclose(fp);
 }
+/*功能：将文件tokenlist中的信息作为返回值，listing指向标准输出
+ * 说明：返回值为TokenType类型，用于语法分析
+ * */
+void ReadNextToken(TokenType *p){
+    FILE *fp2;
+    fp2=fopen((path+filename).c_str(),"rb");
+    if(!fp2){
+        printf("cannot craate file Tokenlist!\n");
+        Error =TRUE;
+    }
+    fseek(fp2,fp_num*sizeof(TokenType),0);
+    fread(p,sizeof(TokenType),1,fp2);
+    fp_num++;
+    fclose(fp2);
+}
+/*功能：创建语法树根节点
+ * 说明：为语法树创建一个新节点并将语法树结点成员初始化
+ * */
+TreeNode * newRootNode(){
+    TreeNode *t = new TreeNode();
+    /*语法树结点未能成功分配，将错误信息写入文件*/
+    if(t==NULL){
+        fprintf(listing,"Out of memory error at line %d\n",lineno);
+        Error = TRUE;
+    }else{
+        /*初始化语法树结点各子节点、兄弟结点为NULL*/
+        for (int i = 0; i < MAXCHILDREN; ++i) {
+            t->child[i] = NULL;
+        }
+        t->sibling = NULL;
+        /*指定新语法树结点t成员：结点类型为nodekind的语句类型ProK，标记为根节点*/
+        t->nodeKind = ProK;
+        //更新源代码行号
+        t->lineno = lineno;
+        for (int i = 0; i < 10; ++i) {
+            t->name[i]="\0";
+            t->table[i] = NULL;
+        }
+    }
+    return t;
+}
+
+/*函数名：newPheadNode
+ * 功能：创建程序头语法树结点函数
+ * 说明：如上，但是标记nodekind为PheadK，程序头结点
+ * */
+TreeNode * newPheadNode(){
+    TreeNode *t = new TreeNode();
+    /*语法树结点未能成功分配，将错误信息写入文件*/
+    if(t==NULL){
+        fprintf(listing,"Out of memory error at line %d\n",lineno);
+        Error = TRUE;
+    }else{
+        /*初始化语法树结点各子节点、兄弟结点为NULL*/
+        for (int i = 0; i < MAXCHILDREN; ++i) {
+            t->child[i] = NULL;
+        }
+        t->sibling = NULL;
+        /*指定新语法树结点t成员：结点类型为nodekind的语句类型ProK，标记为程序头节点*/
+        t->nodeKind = PheadK;
+        //更新源代码行号
+        t->lineno = lineno;
+        //初始化变量计数标志
+        t->idnum = 0;
+        for (int i = 0; i < 10; ++i) {
+            t->name[i]="\0";
+            t->table[i] = NULL;
+        }
+    }
+    return t;
+}
+/* 功能：创建声明语法树结点的函数，没有指明具体的结点声明类型，
+ *      在语法树第二层
+ * 说明：该函数为语法树创建一个新的结点，并将语法树结点成员初始化
+ */
+TreeNode * newDecANode(NodeKind kind){
+    TreeNode * t = new TreeNode();
+    if(t==NULL){
+        fprintf(listing,"Out of memory error at line %d\n",lineno);
+        Error = TRUE;
+    }
+    else{
+        /*初始化语法树结点各子节点、兄弟结点为NULL*/
+        for (int i = 0; i < MAXCHILDREN; ++i) {
+            t->child[i] = NULL;
+        }
+        t->sibling = NULL;
+
+        /*指定新语法树结点t成员：结点类型为nodekind的参数kind*/
+        t->nodeKind = kind;
+        //更新源代码行号
+        t->lineno = lineno;
+        //初始化变量计数标志
+        t->idnum = 0;
+        for (int i = 0; i < 10; ++i) {
+            t->name[i]="\0";
+            t->table[i] = NULL;
+        }
+    }
+    return t;
+}
+/*创建声明类型语法树节点函数
+ * 说明：为语法树创建一个新的声明类型节点
+ *      并将语法树节点成员初始化
+ * */
+TreeNode * newDecNode(){
+    TreeNode * t = new TreeNode();
+    if(t==NULL){
+        fprintf(listing,"Out of memory error at line %d\n",lineno);
+        Error = TRUE;
+    }
+    else{
+        /*初始化语法树结点各子节点、兄弟结点为NULL*/
+        for (int i = 0; i < MAXCHILDREN; ++i) {
+            t->child[i] = NULL;
+        }
+        t->sibling = NULL;
+
+        /*指定新语法树结点t成员：结点类型为nodekind的参数DecK*/
+        t->nodeKind = DecK;
+        //更新源代码行号
+        t->lineno = lineno;
+        //初始化变量计数标志
+        t->idnum = 0;
+        for (int i = 0; i < 10; ++i) {
+            t->name[i]="\0";
+            t->table[i] = NULL;
+        }
+    }
+    return t;
+}
+/*功能：创建函数类型语法树结点
+ * 说明：为语法树创建一个新的函数类型节点
+ * */
+TreeNode * newProcNode(){
+    TreeNode * t = new TreeNode();
+    if(t==NULL){
+        fprintf(listing,"Out of memory error at line %d\n",lineno);
+        Error = TRUE;
+    }
+    else{
+        /*初始化语法树结点各子节点、兄弟结点为NULL*/
+        for (int i = 0; i < MAXCHILDREN; ++i) {
+            t->child[i] = NULL;
+        }
+        t->sibling = NULL;
+
+        /*指定新语法树结点t成员：结点类型为nodekind的参数DecK*/
+        t->nodeKind = ProcDecK;
+        //更新源代码行号
+        t->lineno = lineno;
+        //初始化变量计数标志
+        t->idnum = 0;
+        for (int i = 0; i < 10; ++i) {
+            t->name[i]="\0";
+            t->table[i] = NULL;
+        }
+    }
+    return t;
+}
+/*功能：创建语句标志类型语法树结点，并将其成员初始化
+ * */
+TreeNode * newStmlNode(){
+    TreeNode * t = new TreeNode();
+    if(t==NULL){
+        fprintf(listing,"Out of memory error at line %d\n",lineno);
+        Error = TRUE;
+    }
+    else{
+        /*初始化语法树结点各子节点、兄弟结点为NULL*/
+        for (int i = 0; i < MAXCHILDREN; ++i) {
+            t->child[i] = NULL;
+        }
+        t->sibling = NULL;
+
+        /*指定新语法树结点t成员：结点类型为nodekind的参数DecK*/
+        t->nodeKind = StmLK;
+        //更新源代码行号
+        t->lineno = lineno;
+        //初始化变量计数标志
+        t->idnum = 0;
+        for (int i = 0; i < 10; ++i) {
+            t->name[i]="\0";
+            t->table[i] = NULL;
+        }
+    }
+    return t;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

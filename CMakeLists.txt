@@ -3,4 +3,4 @@ project(SNLInterpreter)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(SNLInterpreter main.cpp scanner.h scanner.cpp util.h global.h)
+add_executable(SNLInterpreter main.cpp LexicalAnalysis/scanner.h LexicalAnalysis/scanner.cpp util.h global.h util.cpp SyntaxAnalysis/parse.h SyntaxAnalysis/parse.cpp)
