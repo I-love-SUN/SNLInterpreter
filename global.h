@@ -10,6 +10,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <string>
+#include <string.h>
 using std::string;
 /*
  * 定义常量FALSE为0，TRUE为1
@@ -229,9 +230,9 @@ typedef struct treeNode
         struct {
             LexType op;             //表达式的操作符
             int val;                //表达式的值
-            VarKind varKind;        //变量的类别
+            VarKind varkind;        //变量的类别
             ExpType type;           //表达式属性
-        };
+        }ExpAttr;
 
         string typeName;            //类型名是标识符
     }attr;
