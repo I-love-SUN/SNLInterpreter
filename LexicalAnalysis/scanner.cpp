@@ -322,7 +322,7 @@ void getTokenlist()
                 /*下标范围状态*/
                 case INRANGE:{
                     state = DONE;
-                    if(ch=='.')curToken.Lex = UNDERANGE;
+                    if(ch=='.') curToken.Lex = UNDERANGE;
                     else{
                         /*"."后面不是".",当前识别单词curToken设置为ERROR*/
                         ungetNextChar();

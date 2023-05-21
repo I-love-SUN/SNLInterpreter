@@ -1,5 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj"
+
+  "CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.obj"
+
   "CMakeFiles/SNLInterpreter.dir/main.cpp.obj"
   "CMakeFiles/SNLInterpreter.dir/util.cpp.obj"
   "SNLInterpreter.exe"

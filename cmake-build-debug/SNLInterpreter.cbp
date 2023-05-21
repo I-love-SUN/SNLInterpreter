@@ -8,18 +8,18 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="D:/SNLInterpreter/cmake-build-debug"/>
+				<Option working_dir="D:/MyCourses/SNLInterpreter/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="SNLInterpreter">
-				<Option output="D:/SNLInterpreter/cmake-build-debug/SNLInterpreter.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/SNLInterpreter/cmake-build-debug"/>
+				<Option output="D:/MyCourses/SNLInterpreter/cmake-build-debug/SNLInterpreter.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/MyCourses/SNLInterpreter/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -32,15 +32,15 @@
 					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 SNLInterpreter"/>
-					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 SNLInterpreter"/>
+					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="SNLInterpreter/fast">
-				<Option output="D:/SNLInterpreter/cmake-build-debug/SNLInterpreter.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/SNLInterpreter/cmake-build-debug"/>
+				<Option output="D:/MyCourses/SNLInterpreter/cmake-build-debug/SNLInterpreter.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/MyCourses/SNLInterpreter/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -53,33 +53,34 @@
 					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 SNLInterpreter/fast"/>
-					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 SNLInterpreter/fast"/>
+					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="D:/SNLInterpreter/cmake-build-debug"/>
+				<Option working_dir="D:/MyCourses/SNLInterpreter/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="D:/SNLInterpreter/cmake-build-debug"/>
+				<Option working_dir="D:/MyCourses/SNLInterpreter/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyCourses/SNLInterpreter/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
+
 		<Unit filename="D:/SNLInterpreter/LexicalAnalysis/scanner.cpp">
 			<Option target="SNLInterpreter"/>
 		</Unit>
@@ -93,12 +94,33 @@
 			<Option target="SNLInterpreter"/>
 		</Unit>
 		<Unit filename="D:/SNLInterpreter/util.cpp">
+
+		<Unit filename="D:/MyCourses/SNLInterpreter/LexicalAnalysis/scanner.cpp">
 			<Option target="SNLInterpreter"/>
 		</Unit>
-		<Unit filename="D:/SNLInterpreter/util.h">
+		<Unit filename="D:/MyCourses/SNLInterpreter/LexicalAnalysis/scanner.h">
 			<Option target="SNLInterpreter"/>
 		</Unit>
-		<Unit filename="D:/SNLInterpreter/CMakeLists.txt">
+		<Unit filename="D:/MyCourses/SNLInterpreter/SyntaxAnalysis/parse.cpp">
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/MyCourses/SNLInterpreter/SyntaxAnalysis/parse.h">
+
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/MyCourses/SNLInterpreter/global.h">
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/MyCourses/SNLInterpreter/main.cpp">
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/MyCourses/SNLInterpreter/util.cpp">
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/MyCourses/SNLInterpreter/util.h">
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/MyCourses/SNLInterpreter/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

@@ -34,19 +34,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = D:\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe
+CMAKE_COMMAND = D:\Clion2020\CLion-2020.1.1\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe
 
 # The command to remove a file.
-RM = D:\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe -E remove -f
+RM = D:\Clion2020\CLion-2020.1.1\CLion-2020.1.1\bin\cmake\win\bin\cmake.exe -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\SNLInterpreter
+CMAKE_SOURCE_DIR = D:\MyCourses\SNLInterpreter
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\SNLInterpreter\cmake-build-debug
+CMAKE_BINARY_DIR = D:\MyCourses\SNLInterpreter\cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -73,14 +73,16 @@ clean: CMakeFiles/SNLInterpreter.dir/clean
 CMakeFiles/SNLInterpreter.dir/all:
 	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/depend
 	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4 "Built target SNLInterpreter"
+
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5 "Built target SNLInterpreter"
 .PHONY : CMakeFiles/SNLInterpreter.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/SNLInterpreter.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\SNLInterpreter\cmake-build-debug\CMakeFiles 4
+
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles 5
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/SNLInterpreter.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\SNLInterpreter\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/SNLInterpreter.dir/rule
 
 # Convenience name for target.

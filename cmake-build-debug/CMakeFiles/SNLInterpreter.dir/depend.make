@@ -6,6 +6,13 @@ CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj: ../LexicalAnalysi
 CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj: ../global.h
 CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj: ../util.h
 
+CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.obj: ../LexicalAnalysis/scanner.h
+CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.obj: ../SyntaxAnalysis/parse.cpp
+CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.obj: ../SyntaxAnalysis/parse.h
+CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.obj: ../global.h
+CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.obj: ../util.h
+
+
 CMakeFiles/SNLInterpreter.dir/main.cpp.obj: ../LexicalAnalysis/scanner.h
 CMakeFiles/SNLInterpreter.dir/main.cpp.obj: ../global.h
 CMakeFiles/SNLInterpreter.dir/main.cpp.obj: ../main.cpp
