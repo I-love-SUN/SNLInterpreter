@@ -12,6 +12,7 @@ CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.obj: ../SyntaxAnalysis/pa
 CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.obj: ../global.h
 CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.obj: ../util.h
 
+
 CMakeFiles/SNLInterpreter.dir/main.cpp.obj: ../LexicalAnalysis/scanner.h
 CMakeFiles/SNLInterpreter.dir/main.cpp.obj: ../global.h
 CMakeFiles/SNLInterpreter.dir/main.cpp.obj: ../main.cpp

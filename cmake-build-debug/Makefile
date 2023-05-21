@@ -149,6 +149,7 @@ LexicalAnalysis/scanner.cpp.s:
 	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.s
 .PHONY : LexicalAnalysis/scanner.cpp.s
 
+
 SyntaxAnalysis/parse.obj: SyntaxAnalysis/parse.cpp.obj
 
 .PHONY : SyntaxAnalysis/parse.obj
@@ -175,6 +176,7 @@ SyntaxAnalysis/parse.s: SyntaxAnalysis/parse.cpp.s
 SyntaxAnalysis/parse.cpp.s:
 	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/SyntaxAnalysis/parse.cpp.s
 .PHONY : SyntaxAnalysis/parse.cpp.s
+
 
 main.obj: main.cpp.obj
 
@@ -242,9 +244,11 @@ help:
 	@echo ... LexicalAnalysis/scanner.obj
 	@echo ... LexicalAnalysis/scanner.i
 	@echo ... LexicalAnalysis/scanner.s
+
 	@echo ... SyntaxAnalysis/parse.obj
 	@echo ... SyntaxAnalysis/parse.i
 	@echo ... SyntaxAnalysis/parse.s
+
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
