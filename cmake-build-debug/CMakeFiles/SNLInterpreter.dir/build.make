@@ -69,34 +69,49 @@ CMakeFiles/SNLInterpreter.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SNLInterpreter.dir/main.cpp.s"
 	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\SNLInterpreter\main.cpp -o CMakeFiles\SNLInterpreter.dir\main.cpp.s
 
-CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj: CMakeFiles/SNLInterpreter.dir/flags.make
-CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj: ../scanner.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj"
-	D:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SNLInterpreter.dir\scanner.cpp.obj -c D:\SNLInterpreter\scanner.cpp
+CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj: CMakeFiles/SNLInterpreter.dir/flags.make
+CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj: ../LexicalAnalysis/scanner.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj"
+	D:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SNLInterpreter.dir\LexicalAnalysis\scanner.cpp.obj -c D:\SNLInterpreter\LexicalAnalysis\scanner.cpp
 
-CMakeFiles/SNLInterpreter.dir/scanner.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SNLInterpreter.dir/scanner.cpp.i"
-	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\SNLInterpreter\scanner.cpp > CMakeFiles\SNLInterpreter.dir\scanner.cpp.i
+CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.i"
+	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\SNLInterpreter\LexicalAnalysis\scanner.cpp > CMakeFiles\SNLInterpreter.dir\LexicalAnalysis\scanner.cpp.i
 
-CMakeFiles/SNLInterpreter.dir/scanner.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SNLInterpreter.dir/scanner.cpp.s"
-	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\SNLInterpreter\scanner.cpp -o CMakeFiles\SNLInterpreter.dir\scanner.cpp.s
+CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.s"
+	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\SNLInterpreter\LexicalAnalysis\scanner.cpp -o CMakeFiles\SNLInterpreter.dir\LexicalAnalysis\scanner.cpp.s
+
+CMakeFiles/SNLInterpreter.dir/util.cpp.obj: CMakeFiles/SNLInterpreter.dir/flags.make
+CMakeFiles/SNLInterpreter.dir/util.cpp.obj: ../util.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SNLInterpreter.dir/util.cpp.obj"
+	D:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SNLInterpreter.dir\util.cpp.obj -c D:\SNLInterpreter\util.cpp
+
+CMakeFiles/SNLInterpreter.dir/util.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SNLInterpreter.dir/util.cpp.i"
+	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\SNLInterpreter\util.cpp > CMakeFiles\SNLInterpreter.dir\util.cpp.i
+
+CMakeFiles/SNLInterpreter.dir/util.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SNLInterpreter.dir/util.cpp.s"
+	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\SNLInterpreter\util.cpp -o CMakeFiles\SNLInterpreter.dir\util.cpp.s
 
 # Object files for target SNLInterpreter
 SNLInterpreter_OBJECTS = \
 "CMakeFiles/SNLInterpreter.dir/main.cpp.obj" \
-"CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj"
+"CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj" \
+"CMakeFiles/SNLInterpreter.dir/util.cpp.obj"
 
 # External object files for target SNLInterpreter
 SNLInterpreter_EXTERNAL_OBJECTS =
 
 SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/main.cpp.obj
-SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj
+SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj
+SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/util.cpp.obj
 SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/build.make
 SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/linklibs.rsp
 SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/objects1.rsp
 SNLInterpreter.exe: CMakeFiles/SNLInterpreter.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable SNLInterpreter.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable SNLInterpreter.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\SNLInterpreter.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
