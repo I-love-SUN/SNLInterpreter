@@ -8,8 +8,9 @@
 #ifndef SNLINTERPRETER_UTIL_H
 #define SNLINTERPRETER_UTIL_H
 
-#endif //SNLINTERPRETER_UTIL_H
-
 void printTokenlist();
 
 void ChainToFile(ChainNodeType *p);
+
+#endif //SNLINTERPRETER_UTIL_H
+

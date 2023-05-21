@@ -122,6 +122,33 @@ SNLInterpreter/fast:
 	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/build
 .PHONY : SNLInterpreter/fast
 
+LexicalAnalysis/scanner.obj: LexicalAnalysis/scanner.cpp.obj
+
+.PHONY : LexicalAnalysis/scanner.obj
+
+# target to build an object file
+LexicalAnalysis/scanner.cpp.obj:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.obj
+.PHONY : LexicalAnalysis/scanner.cpp.obj
+
+LexicalAnalysis/scanner.i: LexicalAnalysis/scanner.cpp.i
+
+.PHONY : LexicalAnalysis/scanner.i
+
+# target to preprocess a source file
+LexicalAnalysis/scanner.cpp.i:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.i
+.PHONY : LexicalAnalysis/scanner.cpp.i
+
+LexicalAnalysis/scanner.s: LexicalAnalysis/scanner.cpp.s
+
+.PHONY : LexicalAnalysis/scanner.s
+
+# target to generate assembly for a file
+LexicalAnalysis/scanner.cpp.s:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/LexicalAnalysis/scanner.cpp.s
+.PHONY : LexicalAnalysis/scanner.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -149,32 +176,32 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-scanner.obj: scanner.cpp.obj
+util.obj: util.cpp.obj
 
-.PHONY : scanner.obj
+.PHONY : util.obj
 
 # target to build an object file
-scanner.cpp.obj:
-	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/scanner.cpp.obj
-.PHONY : scanner.cpp.obj
+util.cpp.obj:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/util.cpp.obj
+.PHONY : util.cpp.obj
 
-scanner.i: scanner.cpp.i
+util.i: util.cpp.i
 
-.PHONY : scanner.i
+.PHONY : util.i
 
 # target to preprocess a source file
-scanner.cpp.i:
-	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/scanner.cpp.i
-.PHONY : scanner.cpp.i
+util.cpp.i:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/util.cpp.i
+.PHONY : util.cpp.i
 
-scanner.s: scanner.cpp.s
+util.s: util.cpp.s
 
-.PHONY : scanner.s
+.PHONY : util.s
 
 # target to generate assembly for a file
-scanner.cpp.s:
-	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/scanner.cpp.s
-.PHONY : scanner.cpp.s
+util.cpp.s:
+	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/util.cpp.s
+.PHONY : util.cpp.s
 
 # Help Target
 help:
@@ -185,12 +212,15 @@ help:
 	@echo ... SNLInterpreter
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... LexicalAnalysis/scanner.obj
+	@echo ... LexicalAnalysis/scanner.i
+	@echo ... LexicalAnalysis/scanner.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
-	@echo ... scanner.obj
-	@echo ... scanner.i
-	@echo ... scanner.s
+	@echo ... util.obj
+	@echo ... util.i
+	@echo ... util.s
 .PHONY : help
 
 
