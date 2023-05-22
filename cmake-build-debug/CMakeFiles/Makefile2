@@ -73,11 +73,13 @@ clean: CMakeFiles/SNLInterpreter.dir/clean
 CMakeFiles/SNLInterpreter.dir/all:
 	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/depend
 	$(MAKE) -f CMakeFiles\SNLInterpreter.dir\build.make CMakeFiles/SNLInterpreter.dir/build
+
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5 "Built target SNLInterpreter"
 .PHONY : CMakeFiles/SNLInterpreter.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/SNLInterpreter.dir/rule: cmake_check_build_system
+
 	$(CMAKE_COMMAND) -E cmake_progress_start D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles 5
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/SNLInterpreter.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start D:\MyCourses\SNLInterpreter\cmake-build-debug\CMakeFiles 0

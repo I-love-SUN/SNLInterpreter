@@ -80,6 +80,21 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+
+		<Unit filename="D:/SNLInterpreter/LexicalAnalysis/scanner.cpp">
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/SNLInterpreter/LexicalAnalysis/scanner.h">
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/SNLInterpreter/global.h">
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/SNLInterpreter/main.cpp">
+			<Option target="SNLInterpreter"/>
+		</Unit>
+		<Unit filename="D:/SNLInterpreter/util.cpp">
+
 		<Unit filename="D:/MyCourses/SNLInterpreter/LexicalAnalysis/scanner.cpp">
 			<Option target="SNLInterpreter"/>
 		</Unit>
@@ -90,6 +105,7 @@
 			<Option target="SNLInterpreter"/>
 		</Unit>
 		<Unit filename="D:/MyCourses/SNLInterpreter/SyntaxAnalysis/parse.h">
+
 			<Option target="SNLInterpreter"/>
 		</Unit>
 		<Unit filename="D:/MyCourses/SNLInterpreter/global.h">

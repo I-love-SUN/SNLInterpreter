@@ -231,7 +231,7 @@ typedef struct treeNode
             int val;                //表达式的值
             VarKind varKind;        //变量的类别
             ExpType type;           //表达式属性
-        };
+        }ExpAttr;
 
         string typeName;            //类型名是标识符
     }attr;
