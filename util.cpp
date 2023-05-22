@@ -338,65 +338,313 @@ TreeNode * newStmlNode(){
     return t;
 }
 
+/*功能：创建语句类型节点，并将其成员初始化
+ * */
+TreeNode * newStmtNode(StmtKind kind){
+    TreeNode * t = new TreeNode();
+    if(t==NULL){
+        fprintf(listing,"Out of memory error at line %d\n",lineno);
+        Error = TRUE;
+    }
+    else{
+        /*初始化语法树结点各子节点、兄弟结点为NULL*/
+        for (int i = 0; i < MAXCHILDREN; ++i) {
+            t->child[i] = NULL;
+        }
+        t->sibling = NULL;
+
+        /*指定新语法树结点t成员：结点类型为nodekind的参数StmLK*/
+        t->nodeKind = StmLK;
+        t->kind.stmt = kind;
+        //更新源代码行号
+        t->lineno = lineno;
+        //初始化变量计数标志
+        t->idnum = 0;
+        for (int i = 0; i < 10; ++i) {
+            t->name[i]="\0";
+            t->table[i] = NULL;
+        }
+    }
+    return t;
+}
+
+/*功能：创建表达式类型节点，并将语法树节点成员初始化
+ * */
+TreeNode * newExpNode(ExpKind kind){
+    TreeNode * t = new TreeNode();
+    if(t==NULL){
+        fprintf(listing,"Out of memory error at line %d\n",lineno);
+        Error = TRUE;
+    }
+    else{
+        /*初始化语法树结点各子节点、兄弟结点为NULL*/
+        for (int i = 0; i < MAXCHILDREN; ++i) {
+            t->child[i] = NULL;
+        }
+        t->sibling = NULL;
+
+        /*指定新语法树结点t成员：结点类型为nodekind的参数ExpK*/
+        t->nodeKind = ExpK;
+        /* 指定新语法树节点t成员: 表达式类型kind.exp为函数给定参数kind */
+        t->kind.exp = kind;
+        //更新源代码行号
+        t->lineno = lineno;
+        //初始化变量计数标志
+        t->idnum = 0;
+        /* 指定新语法树节点t成员: 表达式为变量类型时的变量类型varkind为IdV.*/
+        t->attr.ExpAttr.varKind=IdV;
+        /* 指定新语法树节点t成员: 类型检查类型type为Void */
+        t->attr.ExpAttr.type=Void;
+        for (int i = 0; i < 10; ++i) {
+            t->name[i]="\0";
+            t->table[i] = NULL;
+        }
+    }
+    return t;
+}
 
 
+/******************************************************/
+/* 函数名 printTree                                   */
+/* 功  能 把语法树输出，显示在listing文件中           */
+/* 说  明 该函数运用了宏来定义增量减量的缩进          */
+/******************************************************/
+void  printTree(TreeNode  *tree)
+{  int i;
 
+    /* 增量缩进宏,每次进入语法树节点都进行增量缩进 */
+    INDENT;
 
+    /* 函数参数给定语法树节点指针tree非NULL(空) */
+    while (tree != NULL)
+    {
+        /*打印行号*/
+        if(tree->lineno==0)
+            printTab(9);
+        else
+            switch((int)(tree->lineno / 10))
+            {
+                case 0:
+                    fprintf(listing,"line:%d",tree->lineno);
+                    printTab(3);
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    fprintf(listing,"line:%d",tree->lineno);
+                    printTab(2);
+                    break;
+                default:
+                    fprintf(listing,"line:%d",tree->lineno);
+                    printTab(1);
+            }
 
+        /* 调用函数printSpaces,打印相应的空格,进行缩进 */
+        printSpaces();
 
+        switch ( tree->nodeKind)
+        {   case ProK :
+                fprintf(listing,"%s  ","ProK"); break;
+            case PheadK:
+            {fprintf(listing,"%s  ","PheadK");
+                fprintf(listing,"%s  ",tree->name[0].c_str());
+            }
+                break;
+            case DecK:
+            {  fprintf(listing,"%s  ","DecK");
+                if (tree->attr.ProcAttr.paramt==varparamType )
+                    fprintf(listing,"%s  ","var param:");
+                if (tree->attr.ProcAttr.paramt==valparamType)
+                    fprintf(listing,"%s  ","value param:");
+                switch(tree->kind.dec)
+                { case  ArrayK:
+                    {
+                        fprintf(listing,"%s  ","ArrayK");
+                        fprintf(listing,"%d  ",tree->attr.ArrayAttr.up);
+                        fprintf(listing,"%d  ",tree->attr.ArrayAttr.low);
+                        if (tree->attr.ArrayAttr.childtype == CharK)
+                            fprintf(listing,"%s  ","Chark");
+                        else if( tree->attr.ArrayAttr.childtype == IntegerK)
+                            fprintf(listing,"%s  ","IntegerK");
+                    };break;
+                    case  CharK:
+                        fprintf(listing,"%s  ","CharK");break;
+                    case  IntegerK:
+                        fprintf(listing,"%s  ","IntegerK");break;
+                    case  RecordK:
+                        fprintf(listing,"%s  ","RecordK");break;
+                    case  IdK:
+                        fprintf(listing,"%s  ","IdK");
+                        fprintf(listing,"%s  ",tree->attr.typeName.c_str());
+                        break;
+                    default:
+                        fprintf(listing,"error1!");
+                        Error = TRUE;
+                };
+                if (tree->idnum !=0)
+                    for (int i=0 ; i <= (tree->idnum);i++)
+                    {
+                        fprintf(listing,"%s  ",tree->name[i].c_str());
 
+                    }
+                else
+                {
+                    fprintf(listing,"wrong!no var!\n");
+                    Error = TRUE;
+                }
+            } break;
+            case TypeK:
+                fprintf(listing,"%s  ","TypeK");break;
 
+            case VarK:
+                fprintf(listing,"%s  ","VarK");
+                if(tree->table[0]!=NULL)
+                    fprintf(listing,"%d  %d  ",tree->table[0]->attrIR.More.VarAttr.off,tree->table[0]->attrIR.More.VarAttr.level);
+                break;
 
+            case ProcDecK:
+                fprintf(listing,"%s  ","ProcDecK");
+                fprintf(listing,"%s  ",tree->name[0].c_str());
+                if(tree->table[0]!=NULL)
+                    fprintf(listing,"%d %d %d  ",tree->table[0]->attrIR.More.ProcAttr.mOff,tree->table[0]->attrIR.More.ProcAttr.nOff,tree->table[0]->attrIR.More.ProcAttr.level);
+                break;
 
+            case StmLK:
+                fprintf(listing,"%s  ","StmLk");break;
 
+            case StmtK:
+            { fprintf(listing,"%s  ","StmtK");
+                switch (tree->kind.stmt)
+                { case IfK:
+                        fprintf(listing,"%s  ","If");break;
+                    case WhileK:
+                        fprintf(listing,"%s  ","While");break;
 
+                    case AssignK:
+                        fprintf(listing,"%s  ","Assign");
+                        break;
 
+                    case ReadK:
+                        fprintf(listing,"%s  ","Read");
+                        fprintf(listing,"%s  " , tree->name[0].c_str());
+                        if(tree->table[0]!=NULL)
+                            fprintf(listing,"%d   %d  ",tree->table[0]->attrIR.More.VarAttr.off,tree->table[0]->attrIR.More.VarAttr.level);
+                        break;
 
+                    case WriteK:
+                        fprintf(listing,"%s  ","Write");break;
 
+                    case CallK:
+                        fprintf(listing,"%s  ","Call");
+                        fprintf(listing,"%s  ", tree->name[0].c_str());
+                        break;
 
+                    case ReturnK:
+                        fprintf(listing,"%s  ","Return");break;
 
+                    default:
+                        fprintf(listing,"error2!");
+                        Error = TRUE;
+                }
+            };break;
+            case ExpK:
+            { fprintf(listing,"%s  ","ExpK");
+                switch (tree->kind.exp)
+                { case OpK:
+                    { fprintf(listing,"%s  ","Op");
+                        switch(tree->attr.ExpAttr.op)
+                        { case EQ:   fprintf(listing,"%s  " , "="); break;
+                            case LT:   fprintf(listing,"%s  " , "<"); break;
+                            case PLUS: fprintf(listing,"%s  " , "+"); break;
+                            case MINUS:fprintf(listing,"%s  " , "-"); break;
+                            case TIMES:fprintf(listing,"%s  " , "*"); break;
+                            case OVER: fprintf(listing,"%s  " , "/"); break;
+                            default:
+                                fprintf(listing,"error3!");
+                                Error = TRUE;
+                        }
 
+                        if(tree->attr.ExpAttr.varKind==ArrayMembV)
+                        {
+                            fprintf(listing,"ArrayMember  ");
+                            fprintf(listing,"%s  ",tree->name[0].c_str());
+                        }
+                    };break;
+                    case ConstK:
+                        fprintf(listing,"%s  ","Const");
+                        switch(tree->attr.ExpAttr.varKind)
+                        {
+                            case IdV:
+                                fprintf(listing,"Id  ");
+                                fprintf(listing,"%s  ",tree->name[0].c_str());
+                                break;
+                            case FieldMembV:
+                                fprintf(listing,"FieldMember  ");
+                                fprintf(listing,"%s  ",tree->name[0].c_str());
+                                break;
+                            case ArrayMembV:
+                                fprintf(listing,"ArrayMember  ");
+                                fprintf(listing,"%s  ",tree->name[0].c_str());
+                                break;
+                            default:
+                                fprintf(listing,"var type error!");
+                                Error = TRUE;
+                        }
 
+                        fprintf(listing,"%d  ",tree->attr.ExpAttr.val);
+                        break;
+                    case VariK:
+                        fprintf(listing,"%s  ","Vari");
+                        switch(tree->attr.ExpAttr.varKind)
+                        {
+                            case IdV:
+                                fprintf(listing,"Id  ");
+                                fprintf(listing,"%s  ",tree->name[0].c_str());
+                                break;
+                            case FieldMembV:
+                                fprintf(listing,"FieldMember  ");
+                                fprintf(listing,"%s  ",tree->name[0].c_str());
+                                break;
+                            case ArrayMembV:
+                                fprintf(listing,"ArrayMember  ");
+                                fprintf(listing,"%s  ",tree->name[0].c_str());
+                                break;
+                            default:
+                                fprintf(listing,"var type error!");
+                                Error = TRUE;
+                        }
+                        if(tree->table[0]!=NULL)
+                            fprintf(listing,"%d   %d  ",tree->table[0]->attrIR.More.VarAttr.off,tree->table[0]->attrIR.More.VarAttr.level);
 
+                        break;
+                    default:
+                        fprintf(listing,"error4!");
+                        Error = TRUE;
+                }
+            };break;
+            default:
+                fprintf(listing,"error5!");
+                Error = TRUE;
+        }
 
+        fprintf(listing,"\n");
 
+        /* 对语法树结点tree的各子结点递归调用printTree过程 *
+         * 缩进写入列表文件listing						   */
+        for (i=0;i<MAXCHILDREN;i++)
+            printTree(tree->child[i]);
 
+        /* 对语法树结点tree的兄弟节点递归调用printTree过程 *
+         * 缩进写入列表文件listing						   */
+        tree = tree->sibling;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /* 减量缩进宏,每次退出语法树节点时减量缩进 */
+    UNINDENT;
+}
