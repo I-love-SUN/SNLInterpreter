@@ -42,7 +42,7 @@ static void match(LexType expected) {
  *      设置错误追踪表示Error为TRUE
  * */
 static void syntaxError(string message) {
-    fprintf(listing,"\n>>> error:  ");
+    fprintf(listing,"\n>>> error: ");
     fprintf(listing,"Syntax Error at line %d: %s\n", token.Lineshow, message.c_str());
     Error = TRUE;
 }
@@ -180,6 +180,7 @@ TreeNode* stmMore(void) {
 TreeNode *program(){
     TreeNode * t = programHead();
     TreeNode * q = declarePart();
+    std::cout<<"1\n";
     TreeNode * s = programBody();
 
     TreeNode * root = newRootNode();
@@ -291,7 +292,7 @@ TreeNode * typeDec(){
             break;
         default:
             ReadNextToken(&token);
-            syntaxError("unexpected token is hear!\n");
+            syntaxError("unexpected token is here!\n");
             break;
     }
     return t;
@@ -397,7 +398,7 @@ TreeNode* stm(void) {
 /*功能：类型声明部分处理函数
  * 产生式 < typeId > ::= id
  * */
-void typeID(TreeNode *t){
+void typeId(TreeNode *t){
     int num = t->idnum;
     if((token.Lex==ID)&&(t!=NULL))
     {
@@ -451,7 +452,7 @@ void baseType(TreeNode* t){
             break;
         default:
             ReadNextToken(&token);
-            syntaxError("unexpected token is here");
+            syntaxError("unexpected token is here!");
             break;
     }
 }
@@ -497,7 +498,7 @@ void structureType(TreeNode *t){
             break;
         default:
             ReadNextToken(&token);
-            syntaxError("unexpected token is here");
+            syntaxError("unexpected token is here!");
             break;
     }
 }
@@ -571,7 +572,7 @@ TreeNode* loopStm(void)
         t->lineno = line0;
         t->child[0] = exp();
         match(DO);
-        t->child[1] = stmList();
+        t->child[1] = stmtList();
         match(ENDWH);
     }
     return t;
@@ -1000,7 +1001,7 @@ TreeNode* term(void)
 
     while((token.Lex==TIMES)||(token.Lex==OVER))
     {
-        TreeNode *p = newExpNode(Opk);
+        TreeNode *p = newExpNode(OpK);
 
         if(p!=NULL)
         {
@@ -1050,6 +1051,7 @@ TreeNode *factor(void)
             syntaxError("unexpected token is here");
             break;
     }
+    return t;
 }
 
 /*-------------------------过程声明部分----------------------------*/
@@ -1123,8 +1125,8 @@ void variMore(TreeNode *t)
             match(LMIDPAREN);
             if (t != NULL) {
                 t->child[0] = exp();
-                t->attr.ExpAttr.varKind = ArrayMembV;
-                t->child[0]->attr.ExpAttr.varKind = IdV;
+                t->attr.ExpAttr.varkind = ArrayMembV;
+                t->child[0]->attr.ExpAttr.varkind = IdV;
                 match(RMIDPAREN);
             }
             break;
@@ -1132,8 +1134,8 @@ void variMore(TreeNode *t)
             match(DOT);
             if (t != NULL) {
                 t->child[0] = fieldVar();
-                t->attr.ExpAttr.varKind = FieldMembV;
-                t->child[0]->attr.ExpAttr.varKind = IdV;
+                t->attr.ExpAttr.varkind = FieldMembV;
+                t->child[0]->attr.ExpAttr.varkind = IdV;
             }
             break;
         default:
@@ -1212,7 +1214,7 @@ TreeNode* fieldVar(void)
         (t->idnum)++;
     }
     match(ID);
-    fieldvarMore(t);
+    fieldVarMore(t);
     return t;
 }
 
@@ -1245,7 +1247,7 @@ void fieldVarMore(TreeNode *t)
             match(LMIDPAREN);
             if (t != NULL) {
                 t->child[0] = exp();
-                t->child[0]->attr.ExpAttr.varKind = IdV;
+                t->child[0]->attr.ExpAttr.varkind = IdV;
                 match(RMIDPAREN);
             }
             break;
@@ -1287,6 +1289,7 @@ TreeNode * paramMore(){
             syntaxError("unexpected token is here!");
             break;
     }
+    return t;
 }
 
 

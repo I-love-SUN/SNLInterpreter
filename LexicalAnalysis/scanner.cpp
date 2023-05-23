@@ -14,15 +14,8 @@
 #include<math.h>
 using std::string;
 
-//extern FILE *source;
-//
-//extern FILE *listing;
-//
-//extern int lineno;
-//
-//extern int Tokennum;
-//
-int Error;
+
+
 //
 //extern int EchoSource;
 

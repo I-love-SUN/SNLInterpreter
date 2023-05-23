@@ -24,6 +24,9 @@ int Tokennum = 0;
 int lineno = 0;
 int EchoSource = TRUE;
 int TraceScan = TRUE;
+int TraceParse = TRUE;
+int Error;
+
 
 
 int main() {
@@ -56,7 +59,7 @@ int main() {
     }
     TreeNode * syntaxTree;
 
-    fprintf(listing,"\nLL1 Syntax analysizing:\n");
+    fprintf(listing,"\nRecursive descent Syntax analysizing:\n");
     syntaxTree = parse();
 
     /* 如果语法分析追踪标志为TRUE且没有语法错误,

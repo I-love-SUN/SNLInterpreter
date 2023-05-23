@@ -42,3 +42,6 @@ static int indentno = 0;
 #define UNINDENT indentno-=4
 
 void  printTree(TreeNode  *tree);
+
+/*打印空格*/
+void printTab(int tabnum);
