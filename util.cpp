@@ -404,11 +404,22 @@ TreeNode * newExpNode(ExpKind kind){
 }
 
 
-/******************************************************/
-/* 函数名 printTree                                   */
-/* 功  能 把语法树输出，显示在listing文件中           */
-/* 说  明 该函数运用了宏来定义增量减量的缩进          */
-/******************************************************/
+/* 函数名 printSpaces
+/* 功  能 空格打印函数
+/* 说  明 该函数打印指定数量空格,用于表示子树缩进
+*/
+static void printSpaces(){
+
+    /*按给定缩进量indentno打印空格进行缩进其中缩进量indentno总能保持非负*/
+    for (int i=0;i<indentno;i++)
+        fprintf(listing," ");
+}
+
+/* 函数名 printTree
+* 功  能 把语法树输出，显示在listing文件中
+* 说  明 该函数运用了宏来定义增量减量的缩进
+*/
+
 void  printTree(TreeNode  *tree)
 {  int i;
 
@@ -462,17 +473,17 @@ void  printTree(TreeNode  *tree)
                     fprintf(listing,"%s  ","var param:");
                 if (tree->attr.ProcAttr.paramt==valparamType)
                     fprintf(listing,"%s  ","value param:");
-                switch(tree->kind.dec)
-                { case  ArrayK:
-                    {
+                switch(tree->kind.dec){
+                    case  ArrayK:{
                         fprintf(listing,"%s  ","ArrayK");
                         fprintf(listing,"%d  ",tree->attr.ArrayAttr.up);
                         fprintf(listing,"%d  ",tree->attr.ArrayAttr.low);
                         if (tree->attr.ArrayAttr.childtype == CharK)
-                            fprintf(listing,"%s  ","Chark");
+                            fprintf(listing,"%s  ","CharK");
                         else if( tree->attr.ArrayAttr.childtype == IntegerK)
                             fprintf(listing,"%s  ","IntegerK");
-                    };break;
+                    };
+                        break;
                     case  CharK:
                         fprintf(listing,"%s  ","CharK");break;
                     case  IntegerK:
