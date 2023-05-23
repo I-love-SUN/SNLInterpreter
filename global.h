@@ -371,6 +371,70 @@ extern int TraceCode;
 /*错误追踪标志，防止错误进一步传递*/
 extern int Error;
 
+/*标识符类型*/
+typedef enum{
+    typeKind,varKind,procKind
+} IdKind;
+
+/*变量的类型*/
+typedef enum{
+    dir,//直接变量（值参）
+    indir//间接变量（变参）
+} AccessKind;
+
+/*形参表的结构定义*/
+typedef struct  paramTable
+{
+    struct symbtable   *  entry;/*指向该形参所在符号表中的地址入口*/
+    struct paramTable  *  next;
+}ParamTable;
+
+struct typeIR;
+
+/*标识符的属性结构定义*/
+typedef struct {
+    struct typeIR *idtype;      /*指向标识符的类型内部表示*/
+    IdKind kind;                /*标识符的类型*/
+    union{
+        struct{
+            AccessKind access;  /*判断是变参还是值参*/
+            int     level;
+            int     off;
+            bool    isParam;    /*判断是参数还是普通变量*/
+        }VarAttr;   /*变量标识符的属性*/
+        struct{
+            int level;  /*该过程的层数*/
+            ParamType *param;   /*参数表*/
+            int mOff;   /*过程活动记录的大小*/
+            int nOff;   /*sp到display表的偏移量*/
+            int procEntry;  /*过程的入口地址*/
+            int codeEntry;  /*过程入口标号,用于中间代码生成*/
+        }ProcAttr;  /*过程名标识符的属性*/
+    }More;  /*标识符的不同类型有不同的属性*/
+} AttributeIR;
+/*符号表的结构定义*/
+typedef struct symbtable{
+    string idName;
+    AttributeIR attrIR;
+    struct symbtable * next;
+}SymbTable;
+
+/*使用scope栈的局部符号表方法中所用到的scope栈*/
+extern SymbTable * scope[1000];
+/*scope栈的层数*/
+extern int Level;
+/*在同层的变量偏移*/
+extern int Off;
+/*记录主程序的displayOff*/
+extern int mainOff;
+/*记录当前层的displayOff*/
+extern int savedOff;
+
+
+
+
+
+
 
 
 

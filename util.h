@@ -40,3 +40,5 @@ static int indentno = 0;
 /** 增量/减量缩进宏定义 **/
 #define INDENT indentno+=4
 #define UNINDENT indentno-=4
+
+void  printTree(TreeNode  *tree);

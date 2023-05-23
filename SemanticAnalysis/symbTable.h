@@ -1,0 +1,8 @@
+//
+// Created by long on 2023/5/23.
+//
+
+#ifndef SNLINTERPRETER_SYMBTABLE_H
+#define SNLINTERPRETER_SYMBTABLE_H
+
+#endif //SNLINTERPRETER_SYMBTABLE_H
