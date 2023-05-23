@@ -35,6 +35,7 @@ using std::string;
 /*
  * 初始化符号中变量的偏移
  */
+
 #define INITOFF 7
 
 /*
@@ -265,13 +266,13 @@ typedef enum
     Exp,			  OtherTerm,		Term,           OtherFactor,
     Factor,           Variable,			VariMore,		FieldVar,
     FieldVarMore,     CmpOp,			AddOp,          MultOp
-}  NontmlType;
+}NontmlType;
 
 /*所有的终极符都取自单词词法类型的枚举定义*/
 typedef LexType TmlType;
 
 
-/*LL1分析站栈，存放终极符和非终极符*/
+/*LL1分析栈，存放终极符和非终极符*/
 typedef struct Node
 {
     /*flag=1位非终极符，flag=2位终极符*/
@@ -328,6 +329,12 @@ extern int lineno;
 /*Token序列中单词总数,初始为0*/
 extern int Tokennum;
 
+/*scope栈的层数*/
+extern int Level;
+
+/*在同层的变量偏移*/
+extern int Off;
+
 
 /*符号栈、操作符栈的指针及标志*/
 
@@ -370,6 +377,8 @@ extern int TraceTable;
 extern int TraceCode;
 /*错误追踪标志，防止错误进一步传递*/
 extern int Error;
+
+/**  语义分析需要用到的类型和变量定义  **/
 
 /*标识符类型*/
 typedef enum{
@@ -430,6 +439,45 @@ extern int mainOff;
 /*记录当前层的displayOff*/
 extern int savedOff;
 
+/*****************************************/
+/************类型内部表示*******************/
+/*****************************************/
+
+typedef enum{
+    intTy,
+    charTy,
+    arrayTy,
+    boolTy,
+    recordTy
+}TypeKind;
+
+struct typeIR;
+
+/**域结构单元结构定义**/
+typedef struct fieldchain
+{
+    char id[10];   //变量名
+    int off;        //所在记录中的偏移
+    struct typeIR *UnitType; //域中成员的类型
+    struct fieldchain *Next;
+}fieldChain;
+
+/**类型的内部结构定义**/
+
+typedef struct typeIR
+{
+    int size;   /*类型所占空间大小*/
+    TypeKind kind;
+    union
+    {   struct
+        {	struct typeIR	* indexTy;
+            struct typeIR	* elemTy;
+            int    low;     /*记录数组类型的下界*/
+            int    up;      /*记录数组类型的上界*/
+        }ArrayAttr;
+        fieldChain * body;  /*记录类型中的域链*/
+    } More;
+}TypeIR;
 
 
 
