@@ -456,7 +456,7 @@ struct typeIR;
 /**域结构单元结构定义**/
 typedef struct fieldchain
 {
-    char id[10];   //变量名
+    string ;   //变量名
     int off;        //所在记录中的偏移
     struct typeIR *UnitType; //域中成员的类型
     struct fieldchain *Next;

@@ -26,11 +26,12 @@ void   PrintFieldChain(fieldChain  *currentP)
     while (t!=NULL)
     {
         /*输出标识符名字*/
-        fprintf(listing ,"%s:  ",t->id );
+        fprintf(listing ,"%s:  ",t->id.c_str());
         /*输出标识符的类型信息*/
 
         switch(t->UnitType->kind)
-        {case  intTy :  fprintf(listing ,"intTy     ");   break;
+        {
+            case  intTy :  fprintf(listing ,"intTy     ");   break;
             case  charTy:	fprintf(listing ,"charTy    ");  break;
             case  arrayTy: fprintf(listing ,"arrayTy   "); break;
             case  recordTy:fprintf(listing ,"recordTy  ");break;
@@ -53,7 +54,7 @@ void  PrintOneLayer(int level)
 
     while (t!=NULL)
     { /*输出标识符名字*/
-        fprintf(listing ,"%s:   ",t->idName);
+        fprintf(listing ,"%s:   ",t->idName.c_str());
         AttributeIR  *Attrib = &(t->attrIR );
         /*输出标识符的类型信息，过程标识符除外*/
         if (Attrib->idtype!=NULL)  /*过程标识符*/
@@ -173,7 +174,7 @@ int Enter(string id, AttributeIR *attribP,SymbTable **entry)
     else {
         while (curentry != NULL) {
             prentry = curentry;
-            if (strcmp(id, curentry->idName) == 0) {
+            if (id==curentry->idName) {
                 fprintf(listing, "repetition declaration error!\n");
                 ERROR = TRUE;
                 present = TRUE;
@@ -223,7 +224,7 @@ int FindEntry(string id, SymbTable **entry)
     {
         while((findentry!=NULL)&&(present!=TRUE))
         {
-            if(strcmp(id, findentry->idName)==0)
+            if(id==findentry->idName)
                 present = TRUE;
             else
                 findentry = findentry->next;
@@ -353,7 +354,7 @@ ParamChain* NewParam(void)
  */
 void ErrorPrompt(int line,string name, string message)
 {
-    fprintf(listing,">>>Line: %d, %s %s",line,name.c_str(),message.c)_str());    Error = TRUE;
+    fprintf(listing,">>>Line: %d, %s %s",line,name.c_str(),message.c_str());    Error = TRUE;
     Error = TRUE;
     exit(0);
 }
@@ -380,7 +381,7 @@ bool FindField(string Id,fieldChain *head,fieldChain **Entry)
     /*从表头开始查找这个标识符，直到找到或到达表尾*/
     while ((currentItem!=NULL)&&( present==false))
     {
-        if  (strcmp(currentItem->id, Id )==0)
+        if  (currentItem->id==Id)
         {
             present= true;
             if (Entry!=NULL)
