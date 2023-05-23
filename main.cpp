@@ -11,6 +11,7 @@ using std::string;
 #include "global.h"
 #include "LexicalAnalysis/scanner.h"
 #include "util.h"
+#include "SyntaxAnalysis/parse.h"
 
 /*
  * 全局变量区
@@ -51,6 +52,20 @@ int main() {
         fprintf(listing,"\nLexical analysizing:\n");
         fprintf(listing,"\ntoken list:\n");
         printTokenlist();
+        getchar();
+    }
+    TreeNode * syntaxTree;
+
+    fprintf(listing,"\nLL1 Syntax analysizing:\n");
+    syntaxTree = parse();
+
+    /* 如果语法分析追踪标志为TRUE且没有语法错误,
+       则将生成的语法树输出到屏幕 */
+    if ((TraceParse)&&(!Error))
+    {
+        fprintf(listing,"\nSyntax tree:\n\n");
+        printTree(syntaxTree);
+        getchar();
         getchar();
     }
     return 0;

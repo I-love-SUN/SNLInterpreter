@@ -17,158 +17,35 @@ string tempName;
 static int line0;
 
 
-/*递归调用的函数原型*/
+
+/*函数名：match
+ * 功能：终极符匹配处理函数
+ * 说明：函数参数expected给定期望单词符号与当前单词符号token相匹配
+ * 如果不匹配，则报错
+ */
+static void match(LexType expected) {
+    if(expected == token.Lex){
+        ReadNextToken(&token);
+        line0 = token.Lineshow;
+    }else{
+        syntaxError("not match error ");
+        fprintf(listing,"'%s'\n",token.Sem);
+        ReadNextToken(&token);
+        exit(0);
+    }
+}
 
 
-/*处理参数声明 t是要生成的当前语法树的节点指针*/
-static void formList(TreeNode* t);
-
-/*处理参数声明 t是要生成的当前语法树的节点指针*/
-static void fidMore(TreeNode* t);
-
-/*处理函数中的声明*/
-static TreeNode* procDecPart(void);
-
-/*处理函数体*/
-static TreeNode* proBody(void);
-
-/*处理程序体*/
-static TreeNode* programBody(void);
-
-/*处理语句序列*/
-static TreeNode* stmList(void);
-
-/*处理语句序列*/
-static TreeNode* stmMore(void);
-
-/*处理语句*/
-static TreeNode* stm(void);
-
-/*处理赋值和调用*/
-static TreeNode* assCall(void);
-
-/*处理赋值*/
-static TreeNode* assignmentRest(void);
-
-/*处理条件语句*/
-static TreeNode* conditionalStm(void);
-
-/*处理循环语句*/
-static TreeNode* loopStm(void);
-
-/*处理输入语句*/
-static TreeNode* inputStm(void);
-
-/*处理输出语句*/
-static TreeNode* outputStm(void);
-
-/*处理返回语句*/
-static TreeNode* returnStm(void);
-
-/*处理调用语句*/
-static TreeNode* callStmRest(void);
-
-/*处理实参*/
-static TreeNode* actParamList(void);
-
-/*处理实参*/
-static TreeNode* actParamMore(void);
-
-/*处理表达式*/
-static TreeNode* exp(void);
-
-/*处理简单表达式函数*/
-static TreeNode* simple_exp(void);
-
-/*处理项*/
-static TreeNode* term(void);
-
-/*处理因子*/
-static TreeNode* factor(void);
-
-/*处理变量*/
-static TreeNode* variable(void);
-
-/*处理变量*/
-static void variMore(TreeNode* t);
-
-/*处理域变量*/
-static TreeNode* fieldVar(void);
-
-/*处理域变量*/
-static void fieldVarMore(TreeNode* t);
-
-/*处理总程序*/
-static TreeNode *program();
-/*处理程序头*/
-static TreeNode *programHead();
-/*处理声明部分*/
-static TreeNode *declarePart();
-/*处理类型声明*/
-static TreeNode *typeDec();
-/*处理类型声明*/
-static TreeNode *typeDeclaration();
-/*处理类型声明*/
-static TreeNode *typeDecList();
-/*处理类型声明*/
-static TreeNode *typeDecMore();
-/*处理类型标识符*/
-static void typeId(TreeNode* t);
-/*处理类型名*/
-static void typeName(TreeNode* t);
-/*处理基本类型*/
-static void baseType(TreeNode* t);
-/*处理结构类型*/
-static void structureType(TreeNode* t);
-/*处理数组类型*/
-static void arrayType(TreeNode* t);
-/*处理记录类型*/
-static void recType(TreeNode* t);
-/*处理域*/
-static TreeNode *fieldDecList();
-/*处理域*/
-static TreeNode *fieldDecMore();
-/*处理标识符*/
-static void idList(TreeNode *t);
-/*处理标识符*/
-static void idMore(TreeNode *t);
-/*处理变量声明*/
-static TreeNode *varDec();
-/*处理变量声明*/
-static TreeNode *varDeclaration();
-/*处理变量声明*/
-static TreeNode *varDecList();
-/*处理变量声明*/
-static TreeNode *varDecMore();
-/*处理标识符*/
-static void varIdList(TreeNode *t);
-/*处理标识符*/
-static void varIdMore(TreeNode *t);
-/*处理函数声明*/
-static TreeNode *procDec();
-/*处理函数声明*/
-static TreeNode *procDeclaration();
-/*处理参数声明*/
-static void paramList(TreeNode *t);
-/*处理参数声明*/
-static TreeNode *paramDecList();
-/*处理参数声明*/
-static TreeNode *param();
-/*处理参数声明*/
-static TreeNode * paramMore();
-/*处理函数体*/
-static TreeNode *programBody();
-/*语法错误处理函数*/
-static void syntaxError(string message);
-/*终极符匹配处理函数*/
-void match(LexType expected);
-
-
-static TreeNode *procDecPart();
-
-static TreeNode *procBody();
-
-
+/*函数名：syntaxError
+ * 功能：语法错误处理函数
+ * 说明：将函数参数message指定的错误信息格式化写入列表文件listing
+ *      设置错误追踪表示Error为TRUE
+ * */
+static void syntaxError(string message) {
+    fprintf(listing,"\n>>> error:  ");
+    fprintf(listing,"Syntax Error at line %d: %s\n", token.Lineshow, message.c_str());
+    Error = TRUE;
+}
 
 /*
  * 函数名：formList
@@ -256,7 +133,7 @@ TreeNode* programBody(void)
  * 功能：语句序列处理函数
  * 产生式 <StmtList> ::=  Stm StmMore
  */
-TreeNode* stmList(void)
+TreeNode* stmtList(void)
 {
     TreeNode* t = stm();
     TreeNode* p = stmMore();
@@ -291,38 +168,6 @@ TreeNode* stmMore(void) {
     return t;
 }
 
-
-
-/*函数名：match
- * 功能：终极符匹配处理函数
- * 说明：函数参数expected给定期望单词符号与当前单词符号token相匹配
- * 如果不匹配，则报错
- */
-void match(LexType expected)
-{
-    if(expected == token.Lex){
-        ReadNextToken(&token);
-        line0 = token.Lineshow;
-    }else{
-        syntaxError("not match error ");
-        fprintf(listing,"'%s'\n",token.Sem);
-        ReadNextToken(&token);
-        exit(0);
-    }
-}
-
-
-/*函数名：syntaxError
- * 功能：语法错误处理函数
- * 说明：将函数参数message指定的错误信息格式化写入列表文件listing
- *      设置错误追踪表示Error为TRUE
- */
-static void syntaxError(string message) {
-    fprintf(listing,"\n>>> error:  ");
-    fprintf(listing,"Syntax Error at line %d: %s\n", token.Lineshow, message.c_str());
-    Error = TRUE;
-}
-
 /*
  * 函数名：program
  * 功能：总程序的处理函数
@@ -332,8 +177,7 @@ static void syntaxError(string message) {
  *      为programHead的兄弟节点，程序体部分programBody为declarePart
  *      的兄弟节点。
  * */
-TreeNode * program()
-{
+TreeNode *program(){
     TreeNode * t = programHead();
     TreeNode * q = declarePart();
     TreeNode * s = programBody();
@@ -488,8 +332,7 @@ TreeNode * typeDecList(){
 /*功能：类型声明部分处理函数
  * 产生式 < typeDecMore > ::=    ε | TypeDecList
  * */
-TreeNode * typeDecMore()
-{
+TreeNode * typeDecMore(){
     TreeNode *t = NULL;
     switch(token.Lex)
     {
@@ -519,9 +362,8 @@ TreeNode * typeDecMore()
  *                  | returnStm       {RETURN}
  *                  | id assCall      {id}
  */
-TreeNode* stm(void)
-{
-    TreeNode* t = NULL;
+TreeNode* stm(void) {
+    TreeNode *t = NULL;
     switch (token.Lex) {
         case IF:
             t = conditionalStm();
@@ -539,7 +381,7 @@ TreeNode* stm(void)
             t = returnStm();
             break;
         case ID:
-            tempName = copyString(token.Sem); //util.h
+            tempName = token.Sem;
             match(ID);
             t = assCall();
             break;
@@ -550,6 +392,7 @@ TreeNode* stm(void)
     }
     return t;
 }
+
 
 /*功能：类型声明部分处理函数
  * 产生式 < typeId > ::= id
@@ -630,8 +473,13 @@ TreeNode* assCall(void)
             break;
         case LPAREN:
             t = callStmRest();
-
+            break;
+        default:
+            ReadNextToken(&token);
+            syntaxError("unexpected token is here!");
+            break;
     }
+    return t;
 }
 
 /*功能：类型声明部分处理函数
@@ -670,7 +518,7 @@ TreeNode* assignmentRest(void)
         TreeNode* child1 = newExpNode(VariK);
         if(child1!= NULL){
             child1->lineno = line0;
-            child1->name[0]= tempName;//==============
+            child1->name[0]=tempName;
             (child1->idnum)++;
             variMore(child1);
             t->child[0] = child1;
@@ -699,11 +547,11 @@ TreeNode* conditionalStm(void)
         t->child[0] = exp();
     }
     match(THEN);
-    if(t!=NULL) t->child[1] = stmList();
+    if(t!=NULL) t->child[1] = stmtList();
     if(token.Lex == ELSE)
     {
         match(ELSE);
-        if(t!=NULL) t->child[2] = stmList();
+        if(t!=NULL) t->child[2] = stmtList();
     }
     match(FI);
     return t;
@@ -742,7 +590,7 @@ TreeNode* inputStm(void)
     if((t!= NULL)&&(token.Lex==ID))
     {
         t->lineno = line0;
-        t->name[0] = token.Sem;
+        t->name[0]=token.Sem;
         (t->idnum)++;
     }
     match(ID);
@@ -800,7 +648,7 @@ TreeNode* callStmRest(void)
         if(child0!= NULL)
         {
             child0->lineno = line0;
-            child0->name[0] = tempName;
+            child0->name[0]=tempName;
             (child0->idnum)++;
             t->child[0] = child0;
         }
@@ -1050,7 +898,6 @@ TreeNode* actParamMore(void)
         case COMMA:
             match(COMMA);
             t = actParamList();
-            break;
         default:
             ReadNextToken(&token);
             syntaxError("unexpected token is here!");
@@ -1058,12 +905,11 @@ TreeNode* actParamMore(void)
     }
     return t;
 }
-        
+
 /*变量声明部分处理函数
  * 产生式 < varIdList > ::=  id  varIdMore
  * */
-void varIdList(TreeNode* t)
-{
+void varIdList(TreeNode* t) {
     if(token.Lex == ID){
         t->name[t->idnum]=token.Sem;
         match(ID);
@@ -1078,8 +924,7 @@ void varIdList(TreeNode* t)
 /*变量声明部分处理函数
  *  产生式 < varIdMore > ::=  ε |  , varIdList
  * */
-void varIdMore(TreeNode* t)
-{
+void varIdMore(TreeNode* t){
     switch (token.Lex){
         case SEMI:
             break;
@@ -1155,7 +1000,7 @@ TreeNode* term(void)
 
     while((token.Lex==TIMES)||(token.Lex==OVER))
     {
-        TreeNode *p = newExpNode(OpK);
+        TreeNode *p = newExpNode(Opk);
 
         if(p!=NULL)
         {
@@ -1205,7 +1050,6 @@ TreeNode *factor(void)
             syntaxError("unexpected token is here");
             break;
     }
-    return t;
 }
 
 /*-------------------------过程声明部分----------------------------*/
@@ -1213,8 +1057,7 @@ TreeNode *factor(void)
 /*功能：过程声明部分处理函数
  * 产生式 < procDec > ::=  ε |  procDeclaration
  * */
-TreeNode * procDec()
-{
+TreeNode * procDec(){
     TreeNode * t = NULL;
     switch (token.Lex){
         case BEGIN:break;
@@ -1257,8 +1100,7 @@ TreeNode* variable(void)
  */
 void variMore(TreeNode *t)
 {
-    switch (token.Lex)
-    {
+    switch (token.Lex) {
         case ASSIGN:
         case TIMES:
         case EQ:
@@ -1281,17 +1123,17 @@ void variMore(TreeNode *t)
             match(LMIDPAREN);
             if (t != NULL) {
                 t->child[0] = exp();
-                t->attr.ExpAttr.varkind = ArrayMembV;
-                t->child[0]->attr.ExpAttr.varkind = IdV;
-                match(LMIDPAREN);
+                t->attr.ExpAttr.varKind = ArrayMembV;
+                t->child[0]->attr.ExpAttr.varKind = IdV;
+                match(RMIDPAREN);
             }
             break;
         case DOT:
             match(DOT);
             if (t != NULL) {
                 t->child[0] = fieldVar();
-                t->attr.ExpAttr.varkind = FieldMembV;
-                t->child[0]->attr.ExpAttr.varkind = IdV;
+                t->attr.ExpAttr.varKind = FieldMembV;
+                t->child[0]->attr.ExpAttr.varKind = IdV;
             }
             break;
         default:
@@ -1366,11 +1208,11 @@ TreeNode* fieldVar(void)
     if(t!=NULL&&token.Lex==ID)
     {
         t->lineno = line0;
-        t->name[0] = token.Sem;
+        t->name[0]=token.Sem;
         (t->idnum)++;
     }
     match(ID);
-    fieldVarMore(t);
+    fieldvarMore(t);
     return t;
 }
 
@@ -1381,8 +1223,7 @@ TreeNode* fieldVar(void)
  */
 void fieldVarMore(TreeNode *t)
 {
-    switch(token.Lex)
-    {
+    switch(token.Lex) {
         case ASSIGN:
         case TIMES:
         case EQ:
@@ -1402,10 +1243,9 @@ void fieldVarMore(TreeNode *t)
             break;
         case LMIDPAREN:
             match(LMIDPAREN);
-            if(t!=NULL)
-            {
+            if (t != NULL) {
                 t->child[0] = exp();
-                t->child[0]->attr.ExpAttr.varkind = IdV;
+                t->child[0]->attr.ExpAttr.varKind = IdV;
                 match(RMIDPAREN);
             }
             break;
@@ -1515,3 +1355,7 @@ TreeNode  *procBody() {
     }
     return t;
 }
+
+
+
+
