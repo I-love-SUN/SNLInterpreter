@@ -329,12 +329,6 @@ extern int lineno;
 /*Token序列中单词总数,初始为0*/
 extern int Tokennum;
 
-/*scope栈的层数*/
-extern int Level;
-
-/*在同层的变量偏移*/
-extern int Off;
-
 
 /*符号栈、操作符栈的指针及标志*/
 
@@ -456,7 +450,7 @@ struct typeIR;
 /**域结构单元结构定义**/
 typedef struct fieldchain
 {
-    string ;   //变量名
+    string id;   //变量名
     int off;        //所在记录中的偏移
     struct typeIR *UnitType; //域中成员的类型
     struct fieldchain *Next;
