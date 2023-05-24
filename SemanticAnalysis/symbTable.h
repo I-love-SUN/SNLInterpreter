@@ -11,17 +11,14 @@
 
 #include "../util.h"
 
-int Off=0;
-int Level=0;
-SymbTable * scope[1000];
 
 SymbTable * NewTable(void);
-void CreateTable(SymbTable * table);
+void CreateTable(void);
 void DestroyTable(void);
 
 int Enter(string id,AttributeIR *attribP,SymbTable ** entry);
 
-int Find(string id,SymbTable ** entry);
+int FindEntry(string id,SymbTable ** entry);
 
 AttributeIR FindAttr(SymbTable *entry);
 
@@ -47,5 +44,6 @@ void   PrintFieldChain(fieldChain  *currentP);
 
 bool  FindField(string Id , fieldChain  *head,fieldChain  **Entry );
 
+void   PrintSymbTable();
 #endif //SNLINTERPRETER_SYMBTABLE_H
 

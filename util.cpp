@@ -546,7 +546,6 @@ void  printTree(TreeNode  *tree)
                     case IfK:
                         fprintf(listing,"%s  ","If");break;
                     case WhileK:
-                        std::cout << "11111111";
                         fprintf(listing,"%s  ","While");break;
                     case AssignK:
                         fprintf(listing,"%s  ","Assign");break;

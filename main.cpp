@@ -10,8 +10,9 @@ using std::string;
  */
 #include "global.h"
 #include "LexicalAnalysis/scanner.h"
-#include "util.h"
 #include "SyntaxAnalysis/parse.h"
+#include "SemanticAnalysis/analyze.h"
+#include "SemanticAnalysis/symbTable.h"
 
 /*
  * 全局变量区
@@ -25,8 +26,10 @@ int lineno = 0;
 int EchoSource = TRUE;
 int TraceScan = TRUE;
 int TraceParse = TRUE;
+int  TraceTable = TRUE ;
 int Error;
-
+int StoreNoff;
+int savedOff=0;
 
 
 int main() {

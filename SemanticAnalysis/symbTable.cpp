@@ -103,7 +103,7 @@ void  PrintOneLayer(int level)
  * 函数名:printSymbTable
  * 功能:打印生成的符号表
  */
-void printSymbTable() {
+void PrintSymbTable() {
    int level = 0;
    while(scope[level]!= NULL){
        PrintOneLayer(level);
@@ -118,7 +118,7 @@ void printSymbTable() {
 SymbTable *NewTable(void)
 {
     /*内存中动态申请分配单元，返回指向该单元的符号表类型指针*/
-    SymbTable *table = (SymbTable *) malloc(sizeof(SymbTable));
+    SymbTable *table = new SymbTable();
     if (table == NULL)
     {
         fprintf(listing, "Out of memory!\n");
@@ -279,7 +279,7 @@ int Compat(TypeIR *ty1, TypeIR *ty2)
  */
 TypeIR *NewTy(TypeKind kind)
 {
-    TypeIR *table = (TypeIR *) malloc(sizeof(TypeIR));
+    TypeIR *table = new TypeIR();
     if (table == NULL)
     {
         fprintf(listing, "Out of memory!\n");
@@ -315,7 +315,7 @@ TypeIR *NewTy(TypeKind kind)
  */
 fieldChain* NewBody(void)
 {
-    fieldChain * Ptr = (fieldChain *) malloc(sizeof(fieldChain));
+    fieldChain * Ptr = new fieldChain();
     if (Ptr==NULL)
     {
         fprintf(listing,"Out of memory error !");
@@ -334,9 +334,9 @@ fieldChain* NewBody(void)
  * 函数名:NewParam
  * 功能:创建当前空形参链表
  */
-ParamTable * NewParam(void)
+ParamTable * NewParams(void)
 {
-    ParamTable * Ptr = (ParamTable *) malloc(sizeof(ParamTable));
+    ParamTable * Ptr = new ParamTable();
     if (Ptr==NULL)
     {
         fprintf(listing,"Out of memory error !");

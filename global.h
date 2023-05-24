@@ -407,7 +407,7 @@ typedef struct {
         }VarAttr;   /*变量标识符的属性*/
         struct{
             int level;  /*该过程的层数*/
-            ParamType *param;   /*参数表*/
+            ParamTable *param;   /*参数表*/
             int mOff;   /*过程活动记录的大小*/
             int nOff;   /*sp到display表的偏移量*/
             int procEntry;  /*过程的入口地址*/
@@ -432,6 +432,8 @@ extern int Off;
 extern int mainOff;
 /*记录当前层的displayOff*/
 extern int savedOff;
+/*保存主程序的display表的偏移*/
+extern  int StoreNoff ;
 
 /*****************************************/
 /************类型内部表示*******************/
