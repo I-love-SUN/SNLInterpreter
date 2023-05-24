@@ -71,5 +71,29 @@ int main() {
         getchar();
         getchar();
     }
+
+    fprintf(listing ,"\nSematic analysizing:\n");
+    fprintf(listing ,"Checking  sematic  error......\n");
+    /*语义分析*/
+    analyze(syntaxTree);
+    if (!Error)
+        fprintf(listing ," \nNo  error !\n");
+
+    /*输出符号表*/
+    if ((TraceTable)&&(!Error))
+    {
+        fprintf(listing ,"\nNow printing  symb table.....\n");
+        PrintSymbTable();
+        getchar();
+        getchar();
+    }
+    /*输出含符号表信息的语法树*/
+    if ((TraceParse)&&(!Error))
+    {
+        fprintf(listing,"after  analysis ..");
+        fprintf(listing,"\nSyntax tree:\n\n");
+        printTree(syntaxTree);
+        getchar( );
+    }
     return 0;
 }

@@ -122,7 +122,7 @@ TreeNode* programBody(void)
     if(t!= NULL)
     {
         t->lineno = 0;
-        t->child[0] = stmtList();
+        t->child[0] = stmList();
     }
     match(END);
     return t;
@@ -133,7 +133,7 @@ TreeNode* programBody(void)
  * 功能：语句序列处理函数
  * 产生式 <StmtList> ::=  Stm StmMore
  */
-TreeNode* stmtList(void)
+TreeNode* stmList(void)
 {
     TreeNode* t = stm();
     TreeNode* p = stmMore();
@@ -146,7 +146,7 @@ TreeNode* stmtList(void)
 /*
  * 函数名：stmMore
  * 功能：语句序列处理函数
- * 产生式 <StmMore> ::=  ε|,StmtList
+ * 产生式 <StmMore> ::=  ε|,StmList
  */
 TreeNode* stmMore(void) {
     TreeNode *t = NULL;
@@ -158,7 +158,7 @@ TreeNode* stmMore(void) {
             break;
         case SEMI:
             match(SEMI);
-            stmtList();
+            t=stmList();
             break;
         default:
             ReadNextToken(&token);
@@ -182,7 +182,6 @@ TreeNode *program(){
     TreeNode * q = declarePart();
     std::cout<<"1\n";
     TreeNode * s = programBody();
-
     TreeNode * root = newRootNode();
     if(root!=NULL)
     {
@@ -196,6 +195,7 @@ TreeNode *program(){
         if(s!=NULL) root->child[2]=s;
         else syntaxError("a program body is expected !");
     }
+
     match(DOT);
     return root;
 }
@@ -548,11 +548,11 @@ TreeNode* conditionalStm(void)
         t->child[0] = exp();
     }
     match(THEN);
-    if(t!=NULL) t->child[1] = stmtList();
+    if(t!=NULL) t->child[1] = stmList();
     if(token.Lex == ELSE)
     {
         match(ELSE);
-        if(t!=NULL) t->child[2] = stmtList();
+        if(t!=NULL) t->child[2] = stmList();
     }
     match(FI);
     return t;

@@ -1,17 +1,19 @@
 /**********符号处理程序**********/
-#include "globals.h"
+#include "../global.h"
 
 #include "stdio.h"
 
 #include "string.h"
 
-#include "util.h"
+#include "symbTable.h"
+
 
 static void printTy(TypeIR *ty);
 
 static void printVar(SymbTable *entry);
 
 static void printProc(SymbTable *entry);
+
 
 /**   符号表相关操作    **/
 
@@ -104,7 +106,7 @@ void  PrintOneLayer(int level)
 void printSymbTable() {
    int level = 0;
    while(scope[level]!= NULL){
-       printOneLayer(level);
+       PrintOneLayer(level);
        level++;
    }
 }
@@ -176,7 +178,7 @@ int Enter(string id, AttributeIR *attribP,SymbTable **entry)
             prentry = curentry;
             if (id==curentry->idName) {
                 fprintf(listing, "repetition declaration error!\n");
-                ERROR = TRUE;
+                Error = TRUE;
                 present = TRUE;
             }
             else
@@ -261,7 +263,7 @@ AttributeIR FindAttr(SymbTable *entry)
  * 功能 判断类型是否相容
  * 只有整型类型、字符类型、数组类型和记录类型，只需要判断类型内部表示产生的指针是否相同
  */
-int Compat(TypeIR *tp1, TypeIR *ty2)
+int Compat(TypeIR *ty1, TypeIR *ty2)
 {
     if (ty1!= ty2)
     {
@@ -332,7 +334,7 @@ fieldChain* NewBody(void)
  * 函数名:NewParam
  * 功能:创建当前空形参链表
  */
-ParamChain* NewParam(void)
+ParamTable * NewParam(void)
 {
     ParamTable * Ptr = (ParamTable *) malloc(sizeof(ParamTable));
     if (Ptr==NULL)
@@ -359,15 +361,6 @@ void ErrorPrompt(int line,string name, string message)
     exit(0);
 }
 
-/*
- * 函数名:printTab
- * 功能:打印空格
- */
-void printTab(int tabnum)
-{
-    for (int i = 0; i < tabnum; i++)
-        fprintf(listing," ");
-}
 
 /*
  *函数名：FindField
