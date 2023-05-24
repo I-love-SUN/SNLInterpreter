@@ -168,12 +168,14 @@ void ReadNextToken(TokenType *p){
  * 说明：为语法树创建一个新节点并将语法树结点成员初始化
  * */
 TreeNode * newRootNode(){
+
     TreeNode *t = new TreeNode();
     /*语法树结点未能成功分配，将错误信息写入文件*/
     if(t==NULL){
         fprintf(listing,"Out of memory error at line %d\n",lineno);
         Error = TRUE;
     }else{
+
         /*初始化语法树结点各子节点、兄弟结点为NULL*/
         for (int i = 0; i < MAXCHILDREN; ++i) {
             t->child[i] = NULL;
@@ -188,6 +190,7 @@ TreeNode * newRootNode(){
             t->table[i] = NULL;
         }
     }
+
     return t;
 }
 
@@ -353,8 +356,8 @@ TreeNode * newStmtNode(StmtKind kind){
         }
         t->sibling = NULL;
 
-        /*指定新语法树结点t成员：结点类型为nodekind的参数StmLK*/
-        t->nodeKind = StmLK;
+        /*指定新语法树结点t成员：结点类型为nodekind的参数StmtK*/
+        t->nodeKind = StmtK;
         t->kind.stmt = kind;
         //更新源代码行号
         t->lineno = lineno;
@@ -543,10 +546,10 @@ void  printTree(TreeNode  *tree)
                     case IfK:
                         fprintf(listing,"%s  ","If");break;
                     case WhileK:
+                        std::cout << "11111111";
                         fprintf(listing,"%s  ","While");break;
                     case AssignK:
-                        fprintf(listing,"%s  ","Assign");
-                        break;
+                        fprintf(listing,"%s  ","Assign");break;
                     case ReadK:
                         fprintf(listing,"%s  ","Read");
                         fprintf(listing,"%s  " , tree->name[0].c_str());
@@ -566,9 +569,11 @@ void  printTree(TreeNode  *tree)
                         fprintf(listing,"error2!");
                         Error = TRUE;
                 }
-            };break;
+            };
+                break;
             case ExpK:
-            { fprintf(listing,"%s  ","ExpK");
+            {
+                fprintf(listing,"%s  ","ExpK");
                 switch (tree->kind.exp)
                 {
                     case OpK:

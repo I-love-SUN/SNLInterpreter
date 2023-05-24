@@ -27,7 +27,7 @@ static TreeNode* proBody(void);
 static TreeNode* programBody(void);
 
 /*处理语句序列*/
-static TreeNode* stmtList(void);
+static TreeNode* stmList(void);
 
 /*处理语句序列*/
 static TreeNode* stmMore(void);
