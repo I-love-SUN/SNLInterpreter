@@ -204,6 +204,7 @@ void getTokenlist()
                             }
                             case '<': {
                                 curToken.Lex = LT;
+                                break;
                             }
                             case '(': {
                                 curToken.Lex = LPAREN;
