@@ -482,6 +482,68 @@ typedef struct typeIR
 
 
 
+
+
+
+
+
+
+/*中间代码相关*/
+
+typedef  enum { LabelForm ,
+                ValueForm ,
+                AddrForm
+} ArgForm;
+
+typedef struct
+{
+    ArgForm form;
+    union {
+        int value;
+        int label;
+        struct {
+            string name;
+            int dataLevel;
+            int dataOff;
+            AccessKind access;
+        }addr;
+    }Attr;
+}ArgRecord;
+
+/*中间代码的类别*/
+typedef  enum
+{
+    ADD , SUB , MULT ,DIV , EQC ,LTC,
+    READC, WRITEC ,RETURNC ,ASSIG,AADD ,LABEL,
+    JUMP0, JUMP ,CALL, VARACT ,VALACT,
+    PENTRY , ENDPROC, MENTRY,WHILESTART,ENDWHILE
+}CodeKind ;
+
+/*中间代码的结构*/
+typedef struct {
+    CodeKind codekind;
+    ArgRecord *arg1;
+    ArgRecord *arg2;
+    ArgRecord *arg3;
+}CodeR;
+
+typedef  struct  codeFile
+{
+    CodeR  codeR;
+    struct codeFile  *former;
+    struct codeFile  *next ;
+} CodeFile ;
+
+
+
+
+
+
+
+
+
+
+
 #endif //SNLINTERPRETER_GLOBAL_H
 
 
