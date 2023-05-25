@@ -11,6 +11,15 @@ std::string path = "../outFile/";
 std::string filename = "Tokenlist";
 int fp_num = 0; //输出时记录token的数量
 
+
+/* 静态变量indentno在函数printTree中	*
+ * 用于存储当前子树缩进格数,初始为0		*/
+static int indentno = 0;
+
+/** 增量/减量缩进宏定义 **/
+#define INDENT indentno+=4
+#define UNINDENT indentno-=4
+
 /*
  * 函数名：printTokenlist()
  * 功能：将文件tokenlist中的信息作为返回值输出
@@ -682,7 +691,8 @@ void  printTree(TreeNode  *tree)
  */
 ArgRecord *NewTemp(AccessKind access)
 {
-    ArgRecord *newTemp = (ArgRecord *)malloc(sizeof(ArgRecord));
+    ArgRecord  *newTemp = (ArgRecord *) malloc (sizeof(ArgRecord));
+
     newTemp->form = AddrForm;
     newTemp->Attr.addr.dataLevel = -1;
     newTemp->Attr.addr.dataOff = TempOffset;
@@ -709,8 +719,7 @@ int NewLabel()
 
 ArgRecord *ARGAddr(string id,int level,int off,AccessKind access)
 {
-    ArgRecord  *arg = (ArgRecord *)malloc(sizeof(ArgRecord));
-
+    ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = AddrForm ;
     arg->Attr.addr.name=id;
     arg->Attr.addr.dataLevel=level;
@@ -725,7 +734,7 @@ ArgRecord *ARGAddr(string id,int level,int off,AccessKind access)
  */
 ArgRecord *ARGLabel(int label)
 {
-    ArgRecord *arg = (ArgRecord *)malloc(sizeof(ArgRecord));
+    ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = LabelForm;
     arg->Attr.label = label;
     return arg;
@@ -737,35 +746,43 @@ ArgRecord *ARGLabel(int label)
  */
 ArgRecord *ARGValue(int value)
 {
-    ArgRecord *arg = (ArgRecord *)malloc(sizeof(ArgRecord));
+    ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = ValueForm;
     arg->Attr.value = value;
     return arg;
 }
 
-/*
- * 函数名：GenCode
- * 功能：根据给定参数，构造一条中间代码
+
+/* 功  能  打印代码的类别
+/* 说  明  由函数PrintOneCode调用
  */
-CodeFile *GenCode(CodeKind codekind,ArgRecord *Arg1,ArgRecord *Arg2,ArgRecord *Arg3)
+void  PrintCodeName(CodeKind kind)
 {
-    CodeFile *newCode = (CodeFile *)malloc(sizeof(CodeFile);
-
-    newCode->codeR.codekind = codekind;
-    newCode->codeR.arg1 = Arg1;
-    newCode->codeR.arg2 = Arg2;
-    newCode->codeR.arg3 = Arg3;
-    newCode->former = NULL;
-    newCode->next = NULL;
-
-    if(firstCode==NULL)
-        firstCode = newCode;
-    else{
-        lastCode->next = newCode;
-        newCode->former = lastCode;
+    switch(kind)
+    {	case	ADD:		fprintf(listing ,"ADD");     break;
+        case    SUB:		fprintf(listing ,"SUB");	 break;
+        case	MULT:       fprintf(listing ,"MULT");    break;
+        case	DIV:		fprintf(listing ,"DIV");     break;
+        case	EQC:		fprintf(listing ,"EQ");      break;
+        case	LTC:		fprintf(listing ,"LT");      break;
+        case	READC:		fprintf(listing ,"READ");    break;
+        case	WRITEC:		fprintf(listing ,"WRITE");	 break;
+        case	RETURNC:	fprintf(listing ,"RETURN");  break;
+        case	ASSIG:		fprintf(listing ,"ASSIG");   break;
+        case    AADD:		fprintf(listing ,"AADD");    break;
+        case    LABEL:		fprintf(listing ,"LABEL");   break;
+        case    JUMP0:		fprintf(listing ,"JUMP0");   break;
+        case    JUMP:		fprintf(listing ,"JUMP");    break;
+        case    CALL:		fprintf(listing ,"CALL");    break;
+        case    VARACT:		fprintf(listing ,"VARACT");  break;
+        case    VALACT:		fprintf(listing ,"VALACT");  break;
+        case    PENTRY:		fprintf(listing ,"PENTRY");  break;
+        case    ENDPROC:	fprintf(listing ,"ENDPROC"); break;
+        case    MENTRY:		fprintf(listing ,"MENTRY");  break;
+        case    WHILESTART: fprintf(listing ,"WHILESTART");break;
+        case    ENDWHILE:   fprintf(listing ,"ENDWHILE");  break;
+        default:  break;
     }
-    lastCode = newCode;
-    return newCode;
 }
 
 /*

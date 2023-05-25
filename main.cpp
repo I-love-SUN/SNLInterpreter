@@ -13,6 +13,7 @@ using std::string;
 #include "SyntaxAnalysis/parse.h"
 #include "SemanticAnalysis/analyze.h"
 #include "SemanticAnalysis/symbTable.h"
+#include "MidCodeGeneration/midcode.h"
 
 /*
  * 全局变量区
@@ -30,7 +31,7 @@ int  TraceTable = TRUE ;
 int Error;
 int StoreNoff;
 int savedOff=0;
-
+CodeFile  *midcode = NULL;
 
 int main() {
     std::cout << "Hello, SNL!" << std::endl;
@@ -97,6 +98,15 @@ int main() {
         fprintf(listing,"\nSyntax tree:\n\n");
         printTree(syntaxTree);
         getchar( );
+    }
+    //输出生成的中间代码
+    if (!Error)
+    {
+        std::cout << "midcode：\n";
+        midcode = GenMidCode(syntaxTree);
+        fprintf(listing,"\n>>Generated  Midcode:\n");
+        PrintMidCode(midcode);
+        getchar();
     }
     return 0;
 }

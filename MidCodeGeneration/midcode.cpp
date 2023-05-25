@@ -2,11 +2,10 @@
 // Created by Lenovo on 2023/5/24.
 //
 
-#include "../global.h"
-#include "../util.h"
+
 #include "../SemanticAnalysis/symbTable.h"
 #include "midcode.h"
-
+#include "../util.h"
 /*临时变量*/
 int TempOffset = 0;
 
@@ -24,7 +23,7 @@ CodeFile *lastCode = NULL;
 /*中间代码生成主要函数*/
 CodeFile *GenMidCode(TreeNode* t);
 /*过程声明的中间代码生成*/
-void GenProDec(TreeNode* t);
+void GenProcDec(TreeNode* t);
 /*语句序列中间代码生成*/
 void GenBody(TreeNode* t);
 /*语句的中间代码生成*/
@@ -49,9 +48,9 @@ void GenWriteS(TreeNode *t );
 void GenIfS(TreeNode  *t );
 /*循环语句的中间代码生成*/
 void GenWhileS(TreeNode *t);
+/*四元式中间代码的创建*/
+CodeFile *GenCode (CodeKind codekind , ArgRecord *Arg1 ,ArgRecord *Arg2 ,ArgRecord *Arg3 );
 
-
-/*实现*/
 
 CodeFile *GenMidCode(TreeNode* t)
 {
@@ -60,7 +59,7 @@ CodeFile *GenMidCode(TreeNode* t)
     {
         if(t1->nodeKind==ProcDecK)
         {
-            GenProDec(t1);
+            GenProcDec(t1);
         }
         t1 = t1->sibling;
     }
@@ -82,7 +81,6 @@ CodeFile *GenMidCode(TreeNode* t)
  */
 void GenProcDec(TreeNode *t)
 {
-
     /*过程如果标号*/
     int ProcEntry = NewLabel( );
 
@@ -174,7 +172,7 @@ void GenAssignS(TreeNode*t)
 {
     ArgRecord *Larg = GenVar(t->child[0]);
     ArgRecord *Rarg = GenExpr(t->child[1]);
-    GenCode(ASSIGN,Rarg,Larg,NULL);
+    GenCode(ASSIG,Rarg,Larg,NULL);
 }
 
 /*
@@ -245,7 +243,7 @@ ArgRecord *GenField(ArgRecord *V1arg,TreeNode *t,fieldChain *head)
     FindField(t1->name[0],head ,&Entry2);
     /*域名在域表中的偏移*/
     int  off = Entry2->off;
-
+    ArgRecord  *offArg = ARGValue(off);
     ArgRecord  *temp1 = NewTemp( indir);
     GenCode(AADD , V1arg, offArg , temp1);
     /*域是数组变量*/
@@ -442,5 +440,28 @@ void GenWhileS(TreeNode *t )
 }
 
 
+/*
+ * 函数名：GenCode
+ * 功能：根据给定参数，构造一条中间代码
+ */
+CodeFile *GenCode(CodeKind codekind,ArgRecord* Arg1,ArgRecord* Arg2,ArgRecord* Arg3)
+{
+    CodeFile *newCode = new CodeFile();
 
+    newCode->codeR.codekind = codekind;
+    newCode->codeR.arg1 = Arg1;
+    newCode->codeR.arg2 = Arg2;
+    newCode->codeR.arg3 = Arg3;
+    newCode->former = NULL;
+    newCode->next = NULL;
+
+    if(firstCode==NULL)
+        firstCode = newCode;
+    else{
+        lastCode->next = newCode;
+        newCode->former = lastCode;
+    }
+    lastCode = newCode;
+    return newCode;
+}
 

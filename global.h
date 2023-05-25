@@ -481,15 +481,6 @@ typedef struct typeIR
 
 
 
-
-
-
-
-
-
-
-
-
 /*中间代码相关*/
 
 typedef  enum { LabelForm ,
@@ -538,6 +529,16 @@ typedef  struct  codeFile
 
 
 
+/*********************生成中间代码部分时用到的变量**********************/
+/*临时变量编号*/
+extern  int  TempOffset;
+/*标号值*/
+extern  int  Label ;
+
+/*第一条中间代码*/
+extern  CodeFile  *firstCode ;
+/*最后一条中间代码*/
+extern  CodeFile  *lastCode ;
 
 
 

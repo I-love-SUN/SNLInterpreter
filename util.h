@@ -33,13 +33,6 @@ TreeNode * newStmtNode(StmtKind kind);
 
 TreeNode * newExpNode(ExpKind kind);
 
-/* 静态变量indentno在函数printTree中	*
- * 用于存储当前子树缩进格数,初始为0		*/
-static int indentno = 0;
-
-/** 增量/减量缩进宏定义 **/
-#define INDENT indentno+=4
-#define UNINDENT indentno-=4
 
 void  printTree(TreeNode  *tree);
 
@@ -59,7 +52,7 @@ ArgRecord *NewTemp(AccessKind access);
 int NewLabel();
 
 /*地址的ARG结构的创建*/
-ArgRecord  *ARGAddr(char  *id ,int level, int off, AccessKind access);
+ArgRecord  *ARGAddr(string id ,int level, int off, AccessKind access);
 
 /*标号的ARG结构的创建*/
 ArgRecord *ARGLabel(int  label );
@@ -67,8 +60,7 @@ ArgRecord *ARGLabel(int  label );
 /*常量值的ARG结构的创建*/
 ArgRecord  *ARGValue(int value);
 
-/*四元式中间代码的创建
-CodeFile *GenCode (CodeKind codekind , ArgRecord *Arg1 ,ArgRecord *Arg2 ,ArgRecord *Arg3 );
+
 
 /*打印四元式中间代码序列*/
 void  PrintMidCode(CodeFile  *firstCode);

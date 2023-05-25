@@ -719,7 +719,7 @@ TreeNode* loopStm(void)
         t->lineno = line0;
         t->child[0] = exp();
         match(DO);
-        t->child[1] = stmtList();
+        t->child[1] = stmList();
         match(ENDWH);
     }
     return t;
