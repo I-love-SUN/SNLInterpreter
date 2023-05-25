@@ -101,7 +101,7 @@ void GenProcDec(TreeNode *t)
     /*÷若过程内部仍有过程声明，调用相应的函数，产生过程声明的中间代码*/
     TreeNode *t1=t->child[1];
     while (t1!=NULL)
-    { if (t1->nodeKind=ProcDecK)
+    { if (t1->nodeKind==ProcDecK)
             GenProcDec(t1);
         t1=t1->sibling;
     }

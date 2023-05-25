@@ -102,7 +102,7 @@ int main() {
     //输出生成的中间代码
     if (!Error)
     {
-        std::cout << "midcode：\n";
+        std::cout << "midcode:\n";
         midcode = GenMidCode(syntaxTree);
         fprintf(listing,"\n>>Generated  Midcode:\n");
         PrintMidCode(midcode);

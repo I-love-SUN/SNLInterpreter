@@ -721,11 +721,13 @@ ArgRecord *ARGAddr(string id,int level,int off,AccessKind access)
 {
     ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = AddrForm ;
-    arg->Attr.addr.name=id;
+    printf("argaddr!\n");
+    arg->Attr.addr.name = id;
+    printf("argaddr!\n");
     arg->Attr.addr.dataLevel=level;
     arg->Attr.addr.dataOff=off;
     arg->Attr.addr.access=access;
-    return  (arg);
+    return  arg;
 }
 
 /*
@@ -734,6 +736,7 @@ ArgRecord *ARGAddr(string id,int level,int off,AccessKind access)
  */
 ArgRecord *ARGLabel(int label)
 {
+    printf("argLabel!\n");
     ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = LabelForm;
     arg->Attr.label = label;
@@ -746,6 +749,7 @@ ArgRecord *ARGLabel(int label)
  */
 ArgRecord *ARGValue(int value)
 {
+    printf("argValue!\n");
     ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = ValueForm;
     arg->Attr.value = value;
@@ -815,6 +819,7 @@ void PrintContent(ArgRecord *arg)
             break;
         case ValueForm:
             fprintf(listing,"%d",arg->Attr.value);
+            break;
         case AddrForm:
             if (arg->Attr.addr.dataLevel!=-1)
                 fprintf(listing ,"%s",arg->Attr.addr.name.c_str());
@@ -834,6 +839,7 @@ void PrintContent(ArgRecord *arg)
  */
 void PrintOneCode(CodeFile  *code)
 {
+    printf("debug!!!!!!!!!!");
     PrintCodeName(code->codeR.codekind);
     fprintf(listing ,"    ");
     if (code->codeR.arg1!=NULL)
