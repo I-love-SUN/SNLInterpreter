@@ -666,3 +666,168 @@ void  printTree(TreeNode  *tree)
     /* 减量缩进宏,每次退出语法树节点时减量缩进 */
     UNINDENT;
 }
+
+
+
+
+
+
+
+
+
+/************中间代码有关部分实现**************/
+/*
+ * 函数名：NewTemp
+ * 功能：产生一个新的临时变量ARG结构
+ */
+ArgRecord *NewTemp(AccessKind access)
+{
+    ArgRecord *newTemp = (ArgRecord *)malloc(sizeof(ArgRecord));
+    newTemp->form = AddrForm;
+    newTemp->Attr.addr.dataLevel = -1;
+    newTemp->Attr.addr.dataOff = TempOffset;
+    newTemp->Attr.addr.access = access;
+
+    TempOffset++;
+    return newTemp;
+}
+
+/*
+ * 函数名：NewLabel
+ * 功能：产生一个新的标号值
+ */
+int NewLabel()
+{
+    Label++;
+    return Label;
+}
+
+/*
+ * 函数名：ARGAddr
+ * 功能：对于给定的变量产生相应的ARG结构
+ */
+
+ArgRecord *ARGAddr(string id,int level,int off,AccessKind access)
+{
+    ArgRecord  *arg = (ArgRecord *)malloc(sizeof(ArgRecord));
+
+    arg->form = AddrForm ;
+    arg->Attr.addr.name=id;
+    arg->Attr.addr.dataLevel=level;
+    arg->Attr.addr.dataOff=off;
+    arg->Attr.addr.access=access;
+    return  (arg);
+}
+
+/*
+ * 函数名：ARGLabel
+ * 功能：对于给定的标号产生相应的ARG结构
+ */
+ArgRecord *ARGLabel(int label)
+{
+    ArgRecord *arg = (ArgRecord *)malloc(sizeof(ArgRecord));
+    arg->form = LabelForm;
+    arg->Attr.label = label;
+    return arg;
+}
+
+/*
+ * 函数名：ARGValue
+ * 功能：对于给定的常数值产生相应的ARG结构
+ */
+ArgRecord *ARGValue(int value)
+{
+    ArgRecord *arg = (ArgRecord *)malloc(sizeof(ArgRecord));
+    arg->form = ValueForm;
+    arg->Attr.value = value;
+    return arg;
+}
+
+/*
+ * 函数名：GenCode
+ * 功能：根据给定参数，构造一条中间代码
+ */
+CodeFile *GenCode(CodeKind codekind,ArgRecord *Arg1,ArgRecord *Arg2,ArgRecord *Arg3)
+{
+    CodeFile *newCode = (CodeFile *)malloc(sizeof(CodeFile);
+
+    newCode->codeR.codekind = codekind;
+    newCode->codeR.arg1 = Arg1;
+    newCode->codeR.arg2 = Arg2;
+    newCode->codeR.arg3 = Arg3;
+    newCode->former = NULL;
+    newCode->next = NULL;
+
+    if(firstCode==NULL)
+        firstCode = newCode;
+    else{
+        lastCode->next = newCode;
+        newCode->former = lastCode;
+    }
+    lastCode = newCode;
+    return newCode;
+}
+
+/*
+ * 函数名：PrintMidCode
+ * 功能：打印中间代码序列
+ */
+void PrintMidCode(CodeFile *firstCode) {
+    int i = 0;
+    CodeFile *code = firstCode;
+    while (code != NULL) {
+        fprintf(listing, "           ");
+        fprintf(listing, "%d%s", i, ": ");
+        PrintOneCode(code);
+        fprintf(listing, "\n");
+        code = code->next;
+        i++;
+    }
+}
+
+/*
+ * 函数名：PrintContent
+ * 功能：打印ARG结构的内容
+ */
+void PrintContent(ArgRecord *arg)
+{
+    switch(arg->form)
+    {
+        case LabelForm:
+            fprintf(listing,"%d",arg->Attr.label);
+            break;
+        case ValueForm:
+            fprintf(listing,"%d",arg->Attr.value);
+        case AddrForm:
+            if (arg->Attr.addr.dataLevel!=-1)
+                fprintf(listing ,"%s",arg->Attr.addr.name.c_str());
+            else
+            {
+                fprintf(listing ,"temp");
+                fprintf(listing ,"%d",arg->Attr.addr.dataOff);
+            }
+            break;
+        default:break;
+    }
+}
+
+/*
+ * 函数名：PrintOneCode
+ * 功能：打印一条中间代码
+ */
+void PrintOneCode(CodeFile  *code)
+{
+    PrintCodeName(code->codeR.codekind);
+    fprintf(listing ,"    ");
+    if (code->codeR.arg1!=NULL)
+        PrintContent(code->codeR.arg1);
+    else  fprintf(listing, "  ");
+    fprintf(listing ,"    ");
+    if (code->codeR.arg2!=NULL)
+        PrintContent(code->codeR.arg2);
+    else  fprintf(listing ,"  ");
+    fprintf(listing ,"    ");
+    if (code->codeR.arg3!=NULL)
+        PrintContent(code->codeR.arg3);
+    else  fprintf(listing, "  ");
+}

@@ -327,6 +327,7 @@ TreeNode* stmMore(void) {
 TreeNode *program(){
     TreeNode * t = programHead();
     TreeNode * q = declarePart();
+    std::cout<<"1\n";
     TreeNode * s = programBody();
     TreeNode * root = newRootNode();
     if(root!=NULL)
@@ -718,7 +719,7 @@ TreeNode* loopStm(void)
         t->lineno = line0;
         t->child[0] = exp();
         match(DO);
-        t->child[1] = stmList();
+        t->child[1] = stmtList();
         match(ENDWH);
     }
     return t;
