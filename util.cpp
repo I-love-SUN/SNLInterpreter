@@ -4,6 +4,8 @@
 
 #include "util.h"
 
+#include <utility>
+
 
 //extern FILE *fp;
 
@@ -92,28 +94,22 @@ void printTokenlist(){
 
             case LMIDPAREN: fprintf(listing,"[\n"); break;
 
-            case RMIDPAREN:
-                fprintf(listing,"]\n");
-                break;
+            case RMIDPAREN: fprintf(listing,"]\n"); break;
 
-            case UNDERANGE:
-                fprintf(listing,"..\n");
-                break;
+            case UNDERANGE: fprintf(listing,"..\n"); break;
 
-            case ENDFILE:
-                fprintf(listing,"EOF\n");
-                break;
+            case ENDFILE: fprintf(listing,"EOF\n"); break;
 
             case INTC:
-                fprintf(listing,"NUM, val = %s\n",token.Sem);
+                fprintf(listing,"NUM, val= %s\n",token.Sem);
                 break;
 
             case CHARC:
-                fprintf(listing,"INCHAR, char = %c\n",token.Sem);
+                fprintf(listing,"INCHAR, char= %c\n",token.Sem);
                 break;
 
             case ID:
-                fprintf(listing,"ID, name = %s\n",token.Sem);
+                fprintf(listing,"ID, name= %s\n",token.Sem);
                 break;
 
             case ERROR:
@@ -165,7 +161,7 @@ void ReadNextToken(TokenType *p){
     FILE *fp2;
     fp2=fopen((path+filename).c_str(),"rb");
     if(!fp2){
-        printf("cannot craate file Tokenlist!\n");
+        printf("cannot create file Tokenlist!\n");
         Error =TRUE;
     }
     fseek(fp2,fp_num*sizeof(TokenType),0);
@@ -253,8 +249,6 @@ TreeNode * newDecANode(NodeKind kind){
         t->nodeKind = kind;
         //更新源代码行号
         t->lineno = lineno;
-        //初始化变量计数标志
-        t->idnum = 0;
         for (int i = 0; i < 10; ++i) {
             t->name[i]="\0";
             t->table[i] = NULL;
@@ -367,6 +361,7 @@ TreeNode * newStmtNode(StmtKind kind){
 
         /*指定新语法树结点t成员：结点类型为nodekind的参数StmtK*/
         t->nodeKind = StmtK;
+        /* 指定新语法树节点t成员:语句类型kind.stmt为函数给定参数kind */
         t->kind.stmt = kind;
         //更新源代码行号
         t->lineno = lineno;
@@ -401,8 +396,6 @@ TreeNode * newExpNode(ExpKind kind){
         t->kind.exp = kind;
         //更新源代码行号
         t->lineno = lineno;
-        //初始化变量计数标志
-        t->idnum = 0;
         /* 指定新语法树节点t成员: 表达式为变量类型时的变量类型varkind为IdV.*/
         t->attr.ExpAttr.varkind=IdV;
         /* 指定新语法树节点t成员: 类型检查类型type为Void */
@@ -524,14 +517,13 @@ void  printTree(TreeNode  *tree)
                 if (tree->idnum !=0)
                     for (int i=0 ; i <= (tree->idnum);i++){
                         fprintf(listing,"%s  ",tree->name[i].c_str());
-
                     }
                 else{
                     fprintf(listing,"wrong!no var!\n");
                     Error = TRUE;
                 }
             }
-            break;
+                break;
             case TypeK:
                 fprintf(listing,"%s  ","TypeK");break;
             case VarK:
@@ -722,7 +714,7 @@ ArgRecord *ARGAddr(string id,int level,int off,AccessKind access)
     ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = AddrForm ;
     printf("argaddr!\n");
-    arg->Attr.addr.name = id;
+    arg->Attr.addr.name = std::move(id);
     printf("argaddr!\n");
     arg->Attr.addr.dataLevel=level;
     arg->Attr.addr.dataOff=off;
@@ -798,7 +790,7 @@ void PrintMidCode(CodeFile *firstCode) {
     CodeFile *code = firstCode;
     while (code != NULL) {
         fprintf(listing, "           ");
-        fprintf(listing, "%d%s", i, ": ");
+        fprintf(listing, "%d%s", i, ":  ");
         PrintOneCode(code);
         fprintf(listing, "\n");
         code = code->next;

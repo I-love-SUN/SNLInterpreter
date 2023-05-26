@@ -142,7 +142,7 @@ void getTokenlist()
     /*第一个节点*/
     chainHead = cur_pre = cur = new ChainNodeType();
 
-//    cur->nextToken = nullptr;
+    cur->nextToken = nullptr;
     do{
         /*tokenString中的当前正在识别字符的位置*/
         int tokenStringIndex = 0;
@@ -342,7 +342,7 @@ void getTokenlist()
             /*------------分类完毕-------------------------*/
             /*当前字符存储状态saveFlag为true，且当前识别单词未超过单词最大长度，
              * 将当前字符写入当前正识别单词存储区tokenString            */
-            if(saveFlag && tokenStringIndex < MAXTOKENLEN)
+            if(saveFlag && tokenStringIndex <= MAXTOKENLEN)
                 tokenString[tokenStringIndex++] = (char)ch;
             if(state == DONE)
             {
@@ -374,13 +374,13 @@ void getTokenlist()
             cur_pre = cur;
         }
         cur = new ChainNodeType();
-//        cur->nextToken = nullptr;
+        cur->nextToken = NULL;
     }while(curToken.Lex!=ENDFILE);
 
     /*存入Tokenlist文件*/
     ChainToFile(chainHead);
     /*释放链表*/
-    while(chainHead != nullptr)
+    while(chainHead != NULL)
     {
         temp = chainHead->nextToken;
         delete chainHead;

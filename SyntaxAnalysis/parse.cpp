@@ -243,17 +243,14 @@ TreeNode* procDecPart(void)
     return t;
 }
 
-/*
- * 函数名：proBody
- * 功能：过程体部分处理程序
- * 产生式 <ProBody> ::= ProgramBody
- */
-TreeNode* proBody(void)
-{
-    TreeNode* t = programBody();
-    //没有过程体
-    if(t == NULL)
-        syntaxError("a program body is requested!");
+/*函数中声明部分处理函数
+ * 产生式 < procDecPart > ::=  declarePart
+ * */
+TreeNode  *procBody() {
+    TreeNode * t = programBody();
+    if(t==NULL){
+        syntaxError("a program body is required!");
+    }
     return t;
 }
 
@@ -327,8 +324,8 @@ TreeNode* stmMore(void) {
 TreeNode *program(){
     TreeNode * t = programHead();
     TreeNode * q = declarePart();
-    std::cout<<"1\n";
     TreeNode * s = programBody();
+
     TreeNode * root = newRootNode();
     if(root!=NULL)
     {
@@ -478,7 +475,7 @@ TreeNode * typeDecList(){
 }
 
 /*功能：类型声明部分处理函数
- * 产生式 < typeDecMore > ::=    ε | TypeDecList
+ * 产生式 < typeDecMore > ::= ε | TypeDecList
  * */
 TreeNode * typeDecMore(){
     TreeNode *t = NULL;
@@ -493,7 +490,7 @@ TreeNode * typeDecMore(){
             break;
         default:
             ReadNextToken(&token);
-            syntaxError("unexpected token is hear");
+            syntaxError("unexpected token is here!");
             break;
     }
     return t;
@@ -1120,7 +1117,7 @@ TreeNode* exp(void)
 TreeNode* simple_exp(void)
 {
     TreeNode* t = term();
-    while((token.Lex)==PLUS||(token.Lex==MINUS))
+    while((token.Lex==PLUS)||(token.Lex==MINUS))
     {
         TreeNode* p = newExpNode(OpK);
         if(p!=NULL)
@@ -1131,8 +1128,7 @@ TreeNode* simple_exp(void)
             t = p;
         }
         match(token.Lex);
-        if(t!=NULL)
-            t->child[1] = term();
+        t->child[1] = term();
     }
     return t;
 }
@@ -1270,20 +1266,16 @@ void variMore(TreeNode *t)
             break;
         case LMIDPAREN:
             match(LMIDPAREN);
-            if (t != NULL) {
-                t->child[0] = exp();
-                t->attr.ExpAttr.varkind = ArrayMembV;
-                t->child[0]->attr.ExpAttr.varkind = IdV;
-                match(RMIDPAREN);
-            }
+            t->child[0] = exp();
+            t->attr.ExpAttr.varkind = ArrayMembV;
+            t->child[0]->attr.ExpAttr.varkind = IdV;
+            match(RMIDPAREN);
             break;
         case DOT:
             match(DOT);
-            if (t != NULL) {
-                t->child[0] = fieldVar();
-                t->attr.ExpAttr.varkind = FieldMembV;
-                t->child[0]->attr.ExpAttr.varkind = IdV;
-            }
+            t->child[0] = fieldVar();
+            t->attr.ExpAttr.varkind = FieldMembV;
+            t->child[0]->attr.ExpAttr.varkind = IdV;
             break;
         default:
             ReadNextToken(&token);
@@ -1394,7 +1386,7 @@ void fieldVarMore(TreeNode *t)
             match(LMIDPAREN);
             if (t != NULL) {
                 t->child[0] = exp();
-                t->child[0]->attr.ExpAttr.varkind = IdV;
+                t->child[0]->attr.ExpAttr.varkind = ArrayMembV;
                 match(RMIDPAREN);
             }
             break;
@@ -1427,10 +1419,9 @@ TreeNode * paramMore(){
         case SEMI:
             match(SEMI);
             t=paramDecList();
-            if(t==NULL){
+            if(t==NULL)
                 syntaxError("a param declaration is required!");
-                break;
-            }
+            break;
         default:
             ReadNextToken(&token);
             syntaxError("unexpected token is here!");
@@ -1495,16 +1486,7 @@ TreeNode * param(){
     return t;
 }
 
-/*函数中声明部分处理函数
- * 产生式 < procDecPart > ::=  declarePart
- * */
-TreeNode  *procBody() {
-    TreeNode * t = programBody();
-    if(t==NULL){
-        syntaxError("a program body is required!");
-    }
-    return t;
-}
+
 
 
 
