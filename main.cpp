@@ -14,7 +14,7 @@ using std::string;
 #include "SemanticAnalysis/analyze.h"
 #include "SemanticAnalysis/symbTable.h"
 #include "MidCodeGeneration/midcode.h"
-
+#include "util.h"
 /*
  * 全局变量区
  */

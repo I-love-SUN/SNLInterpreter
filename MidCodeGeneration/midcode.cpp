@@ -109,7 +109,7 @@ void GenProcDec(TreeNode *t)
     /*产生过程入口中间代码*/
     ArgRecord  *arg1=ARGLabel(ProcEntry);
     CodeFile *code = GenCode(PENTRY,arg1,NULL,levelArg);
-    std::cout<<"----------------------\n";
+
     /*初始化临时变量的开始编号，为过程临时变量区的第一个地址*/
     TempOffset =  noff + procLevel+1;
 

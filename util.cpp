@@ -147,11 +147,11 @@ void ChainToFile(ChainNodeType *Chainhead){
         Error = TRUE;
     }
     /*遍历链表，将所有的token写入文件*/
-    while (cur){
+    do {
         fwrite(cur,TOKENLEN,1,fp);
         cur = cur->nextToken;
         num++;
-    }
+    }while (cur!=NULL);
     fclose(fp);
 }
 /*功能：将文件tokenlist中的信息作为返回值，listing指向标准输出
@@ -160,7 +160,7 @@ void ChainToFile(ChainNodeType *Chainhead){
 void ReadNextToken(TokenType *p){
     FILE *fp2;
     fp2=fopen((path+filename).c_str(),"rb");
-    if(!fp2){
+    if(!fp){
         printf("cannot create file Tokenlist!\n");
         Error =TRUE;
     }
@@ -490,7 +490,7 @@ void  printTree(TreeNode  *tree)
                     fprintf(listing,"%s  ","value param:");
                 switch(tree->kind.dec){
                     case  ArrayK:
-                        {
+                    {
                         fprintf(listing,"%s  ","ArrayK");
                         fprintf(listing,"%d  ",tree->attr.ArrayAttr.up);
                         fprintf(listing,"%d  ",tree->attr.ArrayAttr.low);
@@ -498,7 +498,7 @@ void  printTree(TreeNode  *tree)
                             fprintf(listing,"%s  ","CharK");
                         else if( tree->attr.ArrayAttr.childtype == IntegerK)
                             fprintf(listing,"%s  ","IntegerK");
-                        };
+                    };
                         break;
                     case  CharK:
                         fprintf(listing,"%s  ","CharK");break;
@@ -597,7 +597,7 @@ void  printTree(TreeNode  *tree)
                             fprintf(listing,"%s  ",tree->name[0].c_str());
                         }
                     };
-                    break;
+                        break;
                     case ConstK:
                         fprintf(listing,"%s  ","Const");
                         switch(tree->attr.ExpAttr.varkind)
@@ -649,7 +649,7 @@ void  printTree(TreeNode  *tree)
                         Error = TRUE;
                 }
             };
-            break;
+                break;
             default:
                 fprintf(listing,"error5!");
                 Error = TRUE;
@@ -713,9 +713,9 @@ ArgRecord *ARGAddr(string id,int level,int off,AccessKind access)
 {
     ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = AddrForm ;
-    printf("argaddr!\n");
-    arg->Attr.addr.name = std::move(id);
-    printf("argaddr!\n");
+//    printf("argaddr!\n");
+    strcpy(arg->Attr.addr.name ,id.c_str());
+//    printf("argaddr!\n");
     arg->Attr.addr.dataLevel=level;
     arg->Attr.addr.dataOff=off;
     arg->Attr.addr.access=access;
@@ -728,7 +728,7 @@ ArgRecord *ARGAddr(string id,int level,int off,AccessKind access)
  */
 ArgRecord *ARGLabel(int label)
 {
-    printf("argLabel!\n");
+//    printf("argLabel!\n");
     ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = LabelForm;
     arg->Attr.label = label;
@@ -741,7 +741,7 @@ ArgRecord *ARGLabel(int label)
  */
 ArgRecord *ARGValue(int value)
 {
-    printf("argValue!\n");
+//    printf("argValue!\n");
     ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = ValueForm;
     arg->Attr.value = value;
@@ -814,7 +814,7 @@ void PrintContent(ArgRecord *arg)
             break;
         case AddrForm:
             if (arg->Attr.addr.dataLevel!=-1)
-                fprintf(listing ,"%s",arg->Attr.addr.name.c_str());
+                fprintf(listing ,"%s",arg->Attr.addr.name);
             else
             {
                 fprintf(listing ,"temp");
@@ -831,7 +831,7 @@ void PrintContent(ArgRecord *arg)
  */
 void PrintOneCode(CodeFile  *code)
 {
-    printf("debug!!!!!!!!!!");
+//    printf("debug!!!!!!!!!!");
     PrintCodeName(code->codeR.codekind);
     fprintf(listing ,"    ");
     if (code->codeR.arg1!=NULL)

@@ -495,7 +495,7 @@ typedef struct
         int value;
         int label;
         struct {
-            string name;
+            char name[10];
             int dataLevel;
             int dataOff;
             AccessKind access;
