@@ -303,7 +303,6 @@ TypeIR *NewTy(TypeKind kind)
                 table->kind = recordTy;
                 table->More.body = NULL;
                 break;
-            default:break;
         }
     }
     return table;

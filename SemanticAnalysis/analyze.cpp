@@ -255,7 +255,7 @@ void procDecPart(TreeNode *t){
                 ErrorPrompt(t->lineno,"","no this kind in syntax tree!");
                 break;
         }
-        if(t->nodeKind = ProcDecK)
+        if(t->nodeKind == ProcDecK)
             break;
         else
             t=t->sibling;
@@ -397,7 +397,7 @@ TypeIR * Expr(TreeNode * t,AccessKind  *  Ekind)
                         else{
                             Eptr = entry->attrIR.idtype;
                             if (Ekind!=NULL)
-                                (*Ekind) = indir;  /*间接变量*/
+                                *Ekind = indir;  /*间接变量*/
                         }
                     }
                     else /*标识符无声明*/
@@ -525,7 +525,7 @@ static TypeIR * recordVar(TreeNode * t)
                 Eptr0 = entry->attrIR.idtype;
                 currentP = Eptr0->More.body;
                 while((currentP!=NULL) && (result!=FALSE)){
-                    result = (t->child[0]->name[0]==currentP->id);
+                    result = strcmp(t->child[0]->name[0].c_str(),currentP->id.c_str());
                     /*如果相等*/
                     if(result==FALSE)
                         Eptr = currentP->UnitType;
@@ -579,8 +579,7 @@ void assignstatement(TreeNode* t){
     else{
         if(child1->attr.ExpAttr.varkind==ArrayMembV)
             Eptr = arrayVar(child1);
-        else
-            if(child1->attr.ExpAttr.varkind==FieldMembV)
+        else if(child1->attr.ExpAttr.varkind==FieldMembV)
                 Eptr = recordVar(child1);
     }
     if(Eptr!=NULL){

@@ -25,9 +25,6 @@ using std::string;
 int Tokennum = 0;
 int lineno = 0;
 int EchoSource = TRUE;
-int TraceScan = TRUE;
-int TraceParse = TRUE;
-int  TraceTable = TRUE ;
 int Error;
 int StoreNoff;
 int savedOff=0;
@@ -36,9 +33,13 @@ CodeFile  *midcode = NULL;
 int main() {
 
     std::cout << "Hello, SNL!" << std::endl;
-//    ../testFiles/test2.txt
+//      ../testFiles/test1.txt
+//      ../testFiles/test2.txt
+//      ../testFiles/test3.txt
+//      ../testFiles/test4.txt
+
     string programName = "..\\testFiles\\test2.txt";
-    std::cout << "请输入程序的文件名：\n";
+    std::cout << "Please input source file: \n";
     std::cin>>programName;
 
     source = fopen(programName.c_str(),"r");
@@ -50,30 +51,26 @@ int main() {
     listing = stdout;
     fprintf(listing,"\nSource program: %s\n",programName.c_str());
 
+    //获取程序的token链表
     getTokenlist();
-    if(EchoSource)
-    {
-        getchar();
-    }
-    if (TraceScan)
-    {
-        fprintf(listing,"\nLexical analysizing:\n");
-        fprintf(listing,"\ntoken list:\n");
-        printTokenlist();
-        getchar();
-    }
-    TreeNode * syntaxTree;
 
+    fprintf(listing,"\nLexical analysizing:\n");
+    fprintf(listing,"\ntoken list:\n");
+    //打印词法分析的结果
+    printTokenlist();
+    getchar();
+
+    //保存语法树的根节点
+    TreeNode * syntaxTree;
+    //进行语法分析
     fprintf(listing,"\nRecursive descent Syntax analysizing:\n");
     syntaxTree = parse();
 
-    /* 如果语法分析追踪标志为TRUE且没有语法错误,
-       则将生成的语法树输出到屏幕 */
-    if ((TraceParse)&&(!Error))
+    /* 如果没有语法错误,则将生成的语法树输出到屏幕 */
+    if (!Error)
     {
         fprintf(listing,"\nSyntax tree:\n\n");
         printTree(syntaxTree);
-        getchar();
         getchar();
     }
 
@@ -85,15 +82,14 @@ int main() {
         fprintf(listing ," \nNo  error !\n");
 
     /*输出符号表*/
-    if ((TraceTable)&&(!Error))
+    if (!Error)
     {
         fprintf(listing ,"\nNow printing  symb table.....\n");
         PrintSymbTable();
         getchar();
-        getchar();
     }
     /*输出含符号表信息的语法树*/
-    if ((TraceParse)&&(!Error))
+    if (!Error)
     {
         fprintf(listing,"after  analysis ..");
         fprintf(listing,"\nSyntax tree:\n\n");
