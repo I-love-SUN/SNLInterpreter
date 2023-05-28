@@ -1043,6 +1043,7 @@ TreeNode* actParamMore(void)
         case COMMA:
             match(COMMA);
             t = actParamList();
+            break;
         default:
             ReadNextToken(&token);
             syntaxError("unexpected token is here!");

@@ -34,11 +34,12 @@ int savedOff=0;
 CodeFile  *midcode = NULL;
 
 int main() {
-    std::cout << "Hello, SNL!" << std::endl;
 
-    string programName = "..\\testFiles\\test1.txt";
-//    std::cout << "请输入程序的文件名：\n";
-//    std::cin>>programName;
+    std::cout << "Hello, SNL!" << std::endl;
+//    ../testFiles/test2.txt
+    string programName = "..\\testFiles\\test2.txt";
+    std::cout << "请输入程序的文件名：\n";
+    std::cin>>programName;
 
     source = fopen(programName.c_str(),"r");
     if(source == NULL)
@@ -47,7 +48,7 @@ int main() {
         exit(1);
     }
     listing = stdout;
-    fprintf(listing,"\nTINY COMPILATION: %s\n",programName.c_str());
+    fprintf(listing,"\nSource program: %s\n",programName.c_str());
 
     getTokenlist();
     if(EchoSource)
