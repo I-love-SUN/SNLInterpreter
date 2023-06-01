@@ -142,7 +142,7 @@ void getTokenlist()
     /*第一个节点*/
     chainHead = cur_pre = cur = new ChainNodeType();
 
-//    cur->nextToken = nullptr;
+    cur->nextToken = nullptr;
     do{
         /*tokenString中的当前正在识别字符的位置*/
         int tokenStringIndex = 0;
@@ -239,7 +239,7 @@ void getTokenlist()
                     }
                     break;
                 }
-                /*当前为处理标识符状态，DFA处于标识符单词位置*/
+                    /*当前为处理标识符状态，DFA处于标识符单词位置*/
                 case INID:{
                     /* 当前字符不是字母，在缓冲区中回退一个字符，标识符已识别完成*/
                     if(!isalnum(ch))
@@ -251,7 +251,7 @@ void getTokenlist()
                     }
                     break;
                 }
-                //数字状态
+                    //数字状态
                 case INNUM:{
                     /*不是数字则数字串已经识别完毕，回退一个字符*/
                     if(!isdigit(ch))
@@ -267,7 +267,7 @@ void getTokenlist()
                     state = DONE;
                     if(ch=='=')
                         curToken.Lex = ASSIGN;
-                    /*若：后面不是=，在缓冲区中回退一个字符，报错赋值错误*/
+                        /*若：后面不是=，在缓冲区中回退一个字符，报错赋值错误*/
                     else{
                         ungetNextChar();
                         saveFlag = FALSE;
@@ -276,7 +276,7 @@ void getTokenlist()
                     }
                     break;
                 }
-                //注释状态
+                    //注释状态
                 case INCOMMENT:{
                     saveFlag = FALSE;
                     if(ch==EOF){
@@ -286,7 +286,7 @@ void getTokenlist()
                     else if(ch=='}') state = START;  /*注释状态结束，设置为开始状态*/
                     break;
                 }
-                //字符标志状态'c'
+                    //字符标志状态'c'
                 case INCHAR:{
                     if(isalnum(ch))
                     {
@@ -313,7 +313,7 @@ void getTokenlist()
                     }
                     break;
                 }
-                /*下标范围状态*/
+                    /*下标范围状态*/
                 case INRANGE:{
                     state = DONE;
                     if(ch=='.') curToken.Lex = UNDERANGE;
@@ -342,7 +342,7 @@ void getTokenlist()
             /*------------分类完毕-------------------------*/
             /*当前字符存储状态saveFlag为true，且当前识别单词未超过单词最大长度，
              * 将当前字符写入当前正识别单词存储区tokenString            */
-            if(saveFlag && tokenStringIndex < MAXTOKENLEN)
+            if(saveFlag && tokenStringIndex <= MAXTOKENLEN)
                 tokenString[tokenStringIndex++] = (char)ch;
             if(state == DONE)
             {
@@ -374,13 +374,13 @@ void getTokenlist()
             cur_pre = cur;
         }
         cur = new ChainNodeType();
-//        cur->nextToken = nullptr;
+        cur->nextToken = NULL;
     }while(curToken.Lex!=ENDFILE);
 
     /*存入Tokenlist文件*/
     ChainToFile(chainHead);
     /*释放链表*/
-    while(chainHead != nullptr)
+    while(chainHead != NULL)
     {
         temp = chainHead->nextToken;
         delete chainHead;

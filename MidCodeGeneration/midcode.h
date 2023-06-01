@@ -4,6 +4,7 @@
 
 #ifndef SNLINTERPRETER_MIDCODE_H
 #define SNLINTERPRETER_MIDCODE_H
+#include "../global.h"
 
 /*生成中间代码*/
 CodeFile *GenMidCode(TreeNode *t);

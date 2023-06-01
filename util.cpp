@@ -4,12 +4,23 @@
 
 #include "util.h"
 
+#include <utility>
+
 
 //extern FILE *fp;
 
 std::string path = "../outFile/";
 std::string filename = "Tokenlist";
 int fp_num = 0; //输出时记录token的数量
+
+
+/* 静态变量indentno在函数printTree中	*
+ * 用于存储当前子树缩进格数,初始为0		*/
+static int indentno = 0;
+
+/** 增量/减量缩进宏定义 **/
+#define INDENT indentno+=4
+#define UNINDENT indentno-=4
 
 /*
  * 函数名：printTokenlist()
@@ -83,28 +94,22 @@ void printTokenlist(){
 
             case LMIDPAREN: fprintf(listing,"[\n"); break;
 
-            case RMIDPAREN:
-                fprintf(listing,"]\n");
-                break;
+            case RMIDPAREN: fprintf(listing,"]\n"); break;
 
-            case UNDERANGE:
-                fprintf(listing,"..\n");
-                break;
+            case UNDERANGE: fprintf(listing,"..\n"); break;
 
-            case ENDFILE:
-                fprintf(listing,"EOF\n");
-                break;
+            case ENDFILE: fprintf(listing,"EOF\n"); break;
 
             case INTC:
-                fprintf(listing,"NUM, val = %s\n",token.Sem);
+                fprintf(listing,"NUM, val= %s\n",token.Sem);
                 break;
 
             case CHARC:
-                fprintf(listing,"INCHAR, char = %c\n",token.Sem);
+                fprintf(listing,"INCHAR, char= %c\n",token.Sem);
                 break;
 
             case ID:
-                fprintf(listing,"ID, name = %s\n",token.Sem);
+                fprintf(listing,"ID, name= %s\n",token.Sem);
                 break;
 
             case ERROR:
@@ -142,11 +147,11 @@ void ChainToFile(ChainNodeType *Chainhead){
         Error = TRUE;
     }
     /*遍历链表，将所有的token写入文件*/
-    while (cur){
+    do {
         fwrite(cur,TOKENLEN,1,fp);
         cur = cur->nextToken;
         num++;
-    }
+    }while (cur!=NULL);
     fclose(fp);
 }
 /*功能：将文件tokenlist中的信息作为返回值，listing指向标准输出
@@ -155,8 +160,8 @@ void ChainToFile(ChainNodeType *Chainhead){
 void ReadNextToken(TokenType *p){
     FILE *fp2;
     fp2=fopen((path+filename).c_str(),"rb");
-    if(!fp2){
-        printf("cannot craate file Tokenlist!\n");
+    if(!fp){
+        printf("cannot create file Tokenlist!\n");
         Error =TRUE;
     }
     fseek(fp2,fp_num*sizeof(TokenType),0);
@@ -244,8 +249,6 @@ TreeNode * newDecANode(NodeKind kind){
         t->nodeKind = kind;
         //更新源代码行号
         t->lineno = lineno;
-        //初始化变量计数标志
-        t->idnum = 0;
         for (int i = 0; i < 10; ++i) {
             t->name[i]="\0";
             t->table[i] = NULL;
@@ -358,6 +361,7 @@ TreeNode * newStmtNode(StmtKind kind){
 
         /*指定新语法树结点t成员：结点类型为nodekind的参数StmtK*/
         t->nodeKind = StmtK;
+        /* 指定新语法树节点t成员:语句类型kind.stmt为函数给定参数kind */
         t->kind.stmt = kind;
         //更新源代码行号
         t->lineno = lineno;
@@ -392,8 +396,6 @@ TreeNode * newExpNode(ExpKind kind){
         t->kind.exp = kind;
         //更新源代码行号
         t->lineno = lineno;
-        //初始化变量计数标志
-        t->idnum = 0;
         /* 指定新语法树节点t成员: 表达式为变量类型时的变量类型varkind为IdV.*/
         t->attr.ExpAttr.varkind=IdV;
         /* 指定新语法树节点t成员: 类型检查类型type为Void */
@@ -488,7 +490,7 @@ void  printTree(TreeNode  *tree)
                     fprintf(listing,"%s  ","value param:");
                 switch(tree->kind.dec){
                     case  ArrayK:
-                        {
+                    {
                         fprintf(listing,"%s  ","ArrayK");
                         fprintf(listing,"%d  ",tree->attr.ArrayAttr.up);
                         fprintf(listing,"%d  ",tree->attr.ArrayAttr.low);
@@ -496,7 +498,7 @@ void  printTree(TreeNode  *tree)
                             fprintf(listing,"%s  ","CharK");
                         else if( tree->attr.ArrayAttr.childtype == IntegerK)
                             fprintf(listing,"%s  ","IntegerK");
-                        };
+                    };
                         break;
                     case  CharK:
                         fprintf(listing,"%s  ","CharK");break;
@@ -515,14 +517,13 @@ void  printTree(TreeNode  *tree)
                 if (tree->idnum !=0)
                     for (int i=0 ; i <= (tree->idnum);i++){
                         fprintf(listing,"%s  ",tree->name[i].c_str());
-
                     }
                 else{
                     fprintf(listing,"wrong!no var!\n");
                     Error = TRUE;
                 }
             }
-            break;
+                break;
             case TypeK:
                 fprintf(listing,"%s  ","TypeK");break;
             case VarK:
@@ -546,7 +547,6 @@ void  printTree(TreeNode  *tree)
                     case IfK:
                         fprintf(listing,"%s  ","If");break;
                     case WhileK:
-                        std::cout << "11111111";
                         fprintf(listing,"%s  ","While");break;
                     case AssignK:
                         fprintf(listing,"%s  ","Assign");break;
@@ -597,7 +597,7 @@ void  printTree(TreeNode  *tree)
                             fprintf(listing,"%s  ",tree->name[0].c_str());
                         }
                     };
-                    break;
+                        break;
                     case ConstK:
                         fprintf(listing,"%s  ","Const");
                         switch(tree->attr.ExpAttr.varkind)
@@ -649,7 +649,7 @@ void  printTree(TreeNode  *tree)
                         Error = TRUE;
                 }
             };
-            break;
+                break;
             default:
                 fprintf(listing,"error5!");
                 Error = TRUE;
@@ -683,7 +683,8 @@ void  printTree(TreeNode  *tree)
  */
 ArgRecord *NewTemp(AccessKind access)
 {
-    ArgRecord *newTemp = (ArgRecord *)malloc(sizeof(ArgRecord));
+    ArgRecord  *newTemp = (ArgRecord *) malloc (sizeof(ArgRecord));
+
     newTemp->form = AddrForm;
     newTemp->Attr.addr.dataLevel = -1;
     newTemp->Attr.addr.dataOff = TempOffset;
@@ -710,14 +711,15 @@ int NewLabel()
 
 ArgRecord *ARGAddr(string id,int level,int off,AccessKind access)
 {
-    ArgRecord  *arg = (ArgRecord *)malloc(sizeof(ArgRecord));
-
+    ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = AddrForm ;
-    arg->Attr.addr.name=id;
+//    printf("argaddr!\n");
+    strcpy(arg->Attr.addr.name ,id.c_str());
+//    printf("argaddr!\n");
     arg->Attr.addr.dataLevel=level;
     arg->Attr.addr.dataOff=off;
     arg->Attr.addr.access=access;
-    return  (arg);
+    return  arg;
 }
 
 /*
@@ -726,7 +728,8 @@ ArgRecord *ARGAddr(string id,int level,int off,AccessKind access)
  */
 ArgRecord *ARGLabel(int label)
 {
-    ArgRecord *arg = (ArgRecord *)malloc(sizeof(ArgRecord));
+//    printf("argLabel!\n");
+    ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = LabelForm;
     arg->Attr.label = label;
     return arg;
@@ -738,35 +741,44 @@ ArgRecord *ARGLabel(int label)
  */
 ArgRecord *ARGValue(int value)
 {
-    ArgRecord *arg = (ArgRecord *)malloc(sizeof(ArgRecord));
+//    printf("argValue!\n");
+    ArgRecord  *arg = (ArgRecord *) malloc (sizeof(ArgRecord));
     arg->form = ValueForm;
     arg->Attr.value = value;
     return arg;
 }
 
-/*
- * 函数名：GenCode
- * 功能：根据给定参数，构造一条中间代码
+
+/* 功  能  打印代码的类别
+/* 说  明  由函数PrintOneCode调用
  */
-CodeFile *GenCode(CodeKind codekind,ArgRecord *Arg1,ArgRecord *Arg2,ArgRecord *Arg3)
+void  PrintCodeName(CodeKind kind)
 {
-    CodeFile *newCode = (CodeFile *)malloc(sizeof(CodeFile);
-
-    newCode->codeR.codekind = codekind;
-    newCode->codeR.arg1 = Arg1;
-    newCode->codeR.arg2 = Arg2;
-    newCode->codeR.arg3 = Arg3;
-    newCode->former = NULL;
-    newCode->next = NULL;
-
-    if(firstCode==NULL)
-        firstCode = newCode;
-    else{
-        lastCode->next = newCode;
-        newCode->former = lastCode;
+    switch(kind)
+    {	case	ADD:		fprintf(listing ,"ADD");     break;
+        case    SUB:		fprintf(listing ,"SUB");	 break;
+        case	MULT:       fprintf(listing ,"MULT");    break;
+        case	DIV:		fprintf(listing ,"DIV");     break;
+        case	EQC:		fprintf(listing ,"EQ");      break;
+        case	LTC:		fprintf(listing ,"LT");      break;
+        case	READC:		fprintf(listing ,"READ");    break;
+        case	WRITEC:		fprintf(listing ,"WRITE");	 break;
+        case	RETURNC:	fprintf(listing ,"RETURN");  break;
+        case	ASSIG:		fprintf(listing ,"ASSIG");   break;
+        case    AADD:		fprintf(listing ,"AADD");    break;
+        case    LABEL:		fprintf(listing ,"LABEL");   break;
+        case    JUMP0:		fprintf(listing ,"JUMP0");   break;
+        case    JUMP:		fprintf(listing ,"JUMP");    break;
+        case    CALL:		fprintf(listing ,"CALL");    break;
+        case    VARACT:		fprintf(listing ,"VARACT");  break;
+        case    VALACT:		fprintf(listing ,"VALACT");  break;
+        case    PENTRY:		fprintf(listing ,"PENTRY");  break;
+        case    ENDPROC:	fprintf(listing ,"ENDPROC"); break;
+        case    MENTRY:		fprintf(listing ,"MENTRY");  break;
+        case    WHILESTART: fprintf(listing ,"WHILESTART");break;
+        case    ENDWHILE:   fprintf(listing ,"ENDWHILE");  break;
+        default:  break;
     }
-    lastCode = newCode;
-    return newCode;
 }
 
 /*
@@ -778,7 +790,7 @@ void PrintMidCode(CodeFile *firstCode) {
     CodeFile *code = firstCode;
     while (code != NULL) {
         fprintf(listing, "           ");
-        fprintf(listing, "%d%s", i, ": ");
+        fprintf(listing, "%d%s", i, ":  ");
         PrintOneCode(code);
         fprintf(listing, "\n");
         code = code->next;
@@ -799,9 +811,10 @@ void PrintContent(ArgRecord *arg)
             break;
         case ValueForm:
             fprintf(listing,"%d",arg->Attr.value);
+            break;
         case AddrForm:
             if (arg->Attr.addr.dataLevel!=-1)
-                fprintf(listing ,"%s",arg->Attr.addr.name.c_str());
+                fprintf(listing ,"%s",arg->Attr.addr.name);
             else
             {
                 fprintf(listing ,"temp");
@@ -818,6 +831,7 @@ void PrintContent(ArgRecord *arg)
  */
 void PrintOneCode(CodeFile  *code)
 {
+//    printf("debug!!!!!!!!!!");
     PrintCodeName(code->codeR.codekind);
     fprintf(listing ,"    ");
     if (code->codeR.arg1!=NULL)
